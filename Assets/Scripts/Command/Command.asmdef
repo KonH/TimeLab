@@ -1,0 +1,18 @@
+{
+    "name": "Command",
+    "references": [
+        "GUID:560b04d1a97f54a4e82edc0cbbb69285",
+        "GUID:e78245fa8faef4667940c63f85ca6444",
+        "GUID:9726814c0379049bb92df23e48fc5051",
+        "GUID:64eca757c46a149b9ba8b5eee84998ce"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
