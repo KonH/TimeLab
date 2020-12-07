@@ -16,6 +16,8 @@ namespace TimeLab.DI {
 			Container.Bind<WorldSignalProducer>().AsSingle().NonLazy();
 			Container.Bind<LocationContainerHolder>().AsSingle();
 			Container.Bind<IdGenerator>().AsSingle();
+			Container.Bind<UpdateSystem>().AsSingle();
+			Container.Bind<PortalSystem>().AsSingle();
 
 			Container.DeclareSignal<AddLocationCommand>();
 			Container.Bind<AddLocationSystem>().AsSingle().NonLazy();

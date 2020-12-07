@@ -17,13 +17,13 @@ namespace TimeLab.Tests {
 		[Test]
 		public void IsLocationAdded() {
 			var recorder = Container.Resolve<WorldCommandRecorder>();
-			var producer = Container.Resolve<WorldSignalProducer>();
+			var updater  = Container.Resolve<UpdateSystem>();
 			var world    = Container.Resolve<World>();
 			var id       = 1ul;
 			var bounds   = new Rect2DInt(1, 2, 3, 4);
 
 			recorder.TryRecord(new AddLocationCommand(id, bounds));
-			producer.Produce();
+			updater.Update();
 
 			world.Locations.Should().HaveCount(1);
 			world.Locations.First().Id.Should().Be(id);

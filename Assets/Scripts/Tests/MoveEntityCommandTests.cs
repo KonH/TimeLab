@@ -18,14 +18,14 @@ namespace TimeLab.Tests {
 		[Test]
 		public void IsEntityMoved() {
 			var recorder = SubContainer.Resolve<LocationCommandRecorder>();
-			var producer = SubContainer.Resolve<LocationSignalProducer>();
+			var updater  = SubContainer.Resolve<UpdateSystem>();
 			var location = SubContainer.Resolve<Location>();
 			var id       = 2ul;
 			var position = new Vector2Int(1, 2);
 
 			recorder.TryRecord(new AddEntityCommand(id, Vector2Int.zero));
 			recorder.TryRecord(new MoveEntityCommand(id, position));
-			producer.Produce();
+			updater.Update();
 
 			location.Entities.First().Position.Value.Should().Be(position);
 		}

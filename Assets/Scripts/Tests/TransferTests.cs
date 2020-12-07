@@ -1,0 +1,51 @@
+using FluentAssertions;
+using NUnit.Framework;
+using TimeLab.Command;
+using TimeLab.Systems;
+using TimeLab.ViewModel;
+using UnityEngine;
+
+namespace TimeLab.Tests {
+	public sealed class TransferTests : TimeLabLocationTestFixture {
+		const ulong EntityId         = 2;
+		const ulong SecondLocationId = 3;
+
+		LocationCommandRecorder _recorder;
+		World                   _world;
+		UpdateSystem            _updater;
+
+		[SetUp]
+		public override void Init() {
+			base.Init();
+			_recorder = SubContainer.Resolve<LocationCommandRecorder>();
+			SubContainer.Resolve<AddEntitySystem>();
+			_recorder.TryRecord(new AddEntityCommand(EntityId, Vector2Int.zero));
+			var secondSubContainer = CreateLocation(SecondLocationId);
+			secondSubContainer.Resolve<AddEntitySystem>();
+			_recorder.TryRecord(new AddEntityCommand(4, Vector2Int.one, new PortalComponent(SecondLocationId, Vector2Int.zero)));
+			_world   = Container.Resolve<World>();
+			_updater = Container.Resolve<UpdateSystem>();
+			SubContainer.Resolve<PortalSystem>();
+		}
+
+		[Test]
+		public void IsPortalCollectionTransferEntityToAnotherLocation() {
+			_world.Locations[0].Portal.Enqueue(SecondLocationId, new Entity(EntityId));
+			_updater.Update();
+
+			_world.Locations[1].Entities.Should().Contain(e => e.Id == EntityId);
+		}
+
+		[Test]
+		public void IsCollisionWithPortalComponentLeadsToTransfer() {
+			SubContainer.Resolve<MoveEntitySystem>();
+			SubContainer.Resolve<CollisionSystem>();
+			SubContainer.Resolve<TransferSystem>();
+			_recorder.TryRecord(new MoveEntityCommand(2, Vector2Int.one));
+			_updater.Update();
+
+			_world.Locations[0].Portal.Entries.TryGetValue(SecondLocationId, out var queue).Should().BeTrue();
+			queue?.Dequeue().Id.Should().Be(EntityId);
+		}
+	}
+}

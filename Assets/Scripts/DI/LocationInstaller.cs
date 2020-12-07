@@ -25,6 +25,10 @@ namespace TimeLab.DI {
 
 			Container.DeclareSignal<MoveEntityCommand>();
 			Container.Bind<MoveEntitySystem>().AsSingle().NonLazy();
+
+			Container.DeclareSignal<CollisionCommand>();
+			Container.Bind<CollisionSystem>().AsSingle().NonLazy();
+			Container.Bind<TransferSystem>().AsSingle().NonLazy();
 		}
 	}
 }

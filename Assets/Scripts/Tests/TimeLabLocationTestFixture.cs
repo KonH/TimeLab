@@ -14,22 +14,23 @@ namespace TimeLab.Tests {
 		[SetUp]
 		public override void Init() {
 			base.Init();
-			CreateLocation();
-			SubContainer = Container.CreateSubContainer();
-			var world  = Container.Resolve<World>();
-			var holder = Container.Resolve<LocationContainerHolder>();
-			SubContainer.Install<LocationInstaller>(new object[] { world.Locations.First(), holder });
+			SubContainer = CreateLocation();
 		}
 
-		void CreateLocation() {
+		protected DiContainer CreateLocation(ulong id = 1ul) {
 			Container.Resolve<AddLocationSystem>();
 			var recorder = Container.Resolve<WorldCommandRecorder>();
-			var producer = Container.Resolve<WorldSignalProducer>();
-			var id       = 1ul;
+			var updater  = Container.Resolve<UpdateSystem>();
 			var bounds   = new Rect2DInt(1, 2, 3, 4);
 
 			recorder.TryRecord(new AddLocationCommand(id, bounds));
-			producer.Produce();
+			updater.Update();
+
+			var subContainer = Container.CreateSubContainer();
+			var world  = Container.Resolve<World>();
+			var holder = Container.Resolve<LocationContainerHolder>();
+			subContainer.Install<LocationInstaller>(new object[] { world.Locations.First(l => l.Id == id), holder });
+			return subContainer;
 		}
 	}
 }
