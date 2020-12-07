@@ -46,6 +46,9 @@ TagManager:
   - name: Location
     uniqueID: 1401636665
     locked: 0
-  - name: Entity
+  - name: Environment
+    uniqueID: 2904790963
+    locked: 0
+  - name: Character
     uniqueID: 3413695351
     locked: 0

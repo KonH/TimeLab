@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05fd262b0e1142cdb5a435632759eee6, type: 3}
+  m_Name: EntityRenderViewInstaller
+  m_EditorClassIdentifier: 
+  _settings:
+    Bindings:
+    - Type: Player
+      Prefab: {fileID: 7917699693887506823, guid: e38e3964c2e2c4121a85273d51c8643d, type: 3}
+    - Type: Door
+      Prefab: {fileID: 7917699693887506823, guid: f5df5687b24104b6f837be2c2df5dac9, type: 3}

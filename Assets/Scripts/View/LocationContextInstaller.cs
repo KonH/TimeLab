@@ -8,6 +8,7 @@ namespace TimeLab.View {
 		public override void InstallBindings() {
 			Container.BindMemoryPool<LocationContext, LocationContext.Pool>()
 				.FromComponentInNewPrefab(_prefab);
+
 		}
 	}
 }

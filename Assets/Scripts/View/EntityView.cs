@@ -16,12 +16,15 @@ namespace TimeLab.View {
 			}
 		}
 
+		[SerializeField] EntityRenderHolder _renderHolder;
+
 		void Init(Entity entity) {
 			SetupDisposables();
 			gameObject.name = $"Entity_{entity.Id}";
 			entity.Position
 				.Subscribe(OnPositionChange)
 				.AddTo(Disposables);
+			_renderHolder.Init(entity);
 		}
 
 		void OnPositionChange(Vector2Int position) {
