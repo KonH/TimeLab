@@ -8,14 +8,14 @@ namespace TimeLab.Systems {
 	public sealed class TransferSystem {
 		public TransferSystem(Location location, SignalBus bus) {
 			bus.Subscribe<CollisionCommand>(cmd => {
-				var targetEntity = cmd.Target;
+				var targetEntity = location.Entities.First(e => e.Id == cmd.Target);
 				var targetPortal = targetEntity.Components
 					.OfType<PortalComponent>()
 					.FirstOrDefault();
 				if ( targetPortal == null ) {
 					return;
 				}
-				var sourceEntity = cmd.Source;
+				var sourceEntity = location.Entities.First(e => e.Id == cmd.Source);
 				var newPosition  = targetPortal.TargetPosition;
 				location.Entities.Remove(sourceEntity);
 				sourceEntity.Position.Value = newPosition;
