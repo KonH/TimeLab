@@ -1,22 +1,21 @@
 using System.Collections.Generic;
 using TimeLab.Command;
-using TimeLab.Shared;
 
 namespace TimeLab.Manager {
 	/// <summary>
 	/// Storage for all game commands to keep state
 	/// </summary>
 	public sealed class CommandStorage {
-		readonly PermanentQueue<IWorldCommand> _worldCommands = new PermanentQueue<IWorldCommand>();
+		readonly PermanentCommandQueue<WorldCommand> _worldCommands = new PermanentCommandQueue<WorldCommand>();
 
-		readonly Dictionary<ulong, PermanentQueue<ILocationCommand>> _locationCommands
-			= new Dictionary<ulong, PermanentQueue<ILocationCommand>>();
+		readonly Dictionary<ulong, PermanentCommandQueue<LocationCommand>> _locationCommands
+			= new Dictionary<ulong, PermanentCommandQueue<LocationCommand>>();
 
-		public PermanentQueue<IWorldCommand> GetWorldCommands() => _worldCommands;
+		public PermanentCommandQueue<WorldCommand> GetWorldCommands() => _worldCommands;
 
-		public PermanentQueue<ILocationCommand> GetLocationCommands(ulong id) {
+		public PermanentCommandQueue<LocationCommand> GetLocationCommands(ulong id) {
 			if ( !_locationCommands.TryGetValue(id, out var commands) ) {
-				commands = new PermanentQueue<ILocationCommand>();
+				commands = new PermanentCommandQueue<LocationCommand>();
 				_locationCommands.Add(id, commands);
 			}
 			return commands;

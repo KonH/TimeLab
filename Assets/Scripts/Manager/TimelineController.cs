@@ -57,7 +57,7 @@ namespace TimeLab.Manager {
 			var locationCommands = _commandStorage.GetLocationCommands(location.Id);
 			var newComponents    = player.Components.Where(c => !(c is PlayerComponent)).ToList();
 			newComponents.Add(new PlayerComponent(_session.Id));
-			locationCommands.Insert(0, new AddEntityCommand(
+			locationCommands.Enqueue(0, new AddEntityCommand(
 				_idGenerator.GetNextId(), player.Position.Value, newComponents.ToArray()));
 		}
 	}

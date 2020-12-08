@@ -21,10 +21,10 @@ namespace TimeLab.Tests {
 			base.Init();
 			_recorder = SubContainer.Resolve<LocationCommandRecorder>();
 			SubContainer.Resolve<AddEntitySystem>();
-			_recorder.TryRecord(new AddEntityCommand(EntityId, Vector2Int.zero));
+			_recorder.TryRecord(null, new AddEntityCommand(EntityId, Vector2Int.zero));
 			var secondSubContainer = CreateLocation(SecondLocationId);
 			secondSubContainer.Resolve<AddEntitySystem>();
-			_recorder.TryRecord(new AddEntityCommand(4, Vector2Int.one, new PortalComponent(SecondLocationId, Vector2Int.zero)));
+			_recorder.TryRecord(null, new AddEntityCommand(4, Vector2Int.one, new PortalComponent(SecondLocationId, Vector2Int.zero)));
 			_world   = Container.Resolve<World>();
 			_updater = Container.Resolve<UpdateManager>();
 			SubContainer.Resolve<PortalManager>();
@@ -43,7 +43,7 @@ namespace TimeLab.Tests {
 			SubContainer.Resolve<MoveEntitySystem>();
 			SubContainer.Resolve<CollisionSystem>();
 			SubContainer.Resolve<TransferSystem>();
-			_recorder.TryRecord(new MoveEntityCommand(2, Vector2Int.one));
+			_recorder.TryRecord(null, new MoveEntityCommand(2, Vector2Int.one));
 			_updater.Update();
 
 			_world.Locations[0].Portal.Entries.TryGetValue(SecondLocationId, out var queue).Should().BeTrue();

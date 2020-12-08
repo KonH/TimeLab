@@ -2,7 +2,7 @@ using TimeLab.Component;
 using UnityEngine;
 
 namespace TimeLab.Command {
-	public sealed class AddEntityCommand : ILocationCommand {
+	public sealed class AddEntityCommand : LocationCommand {
 		public readonly ulong        Id;
 		public readonly Vector2Int   Position;
 		public readonly IComponent[] Components;

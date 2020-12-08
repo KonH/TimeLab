@@ -5,11 +5,11 @@ using TimeLab.Shared;
 
 namespace TimeLab.Tests {
 	public sealed class PermanentQueueTests {
-		PermanentQueue<int> _queue;
+		SinglePermanentQueue<int> _queue;
 
 		[SetUp]
 		public void Init() {
-			_queue = new PermanentQueue<int>();
+			_queue = new SinglePermanentQueue<int>();
 		}
 
 		[Test]

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace TimeLab.Command {
-	public sealed class MovePlayerCommand : IWorldCommand {
+	public sealed class MovePlayerCommand : WorldCommand {
 		public readonly ulong      Session;
 		public readonly Vector2Int Direction;
 

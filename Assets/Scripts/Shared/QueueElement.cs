@@ -1,5 +1,5 @@
 namespace TimeLab.Shared {
-	readonly struct QueueElement<T> {
+	public readonly struct QueueElement<T> {
 		public readonly double Timestamp;
 		public readonly T      Content;
 

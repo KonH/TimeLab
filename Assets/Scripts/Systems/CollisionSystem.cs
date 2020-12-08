@@ -14,7 +14,7 @@ namespace TimeLab.Systems {
 				var targetEntities = location.Entities
 					.Where(e => (e.Id != sourceId) && (e.Position.Value == targetPosition));
 				foreach ( var targetEntity in targetEntities ) {
-					recorder.TryRecord(new CollisionCommand(sourceEntity.Id, targetEntity.Id));
+					recorder.TryRecord(cmd, new CollisionCommand(sourceEntity.Id, targetEntity.Id));
 				}
 			});
 		}

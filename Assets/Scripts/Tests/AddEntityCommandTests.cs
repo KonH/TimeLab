@@ -23,7 +23,7 @@ namespace TimeLab.Tests {
 			var id       = 2ul;
 			var position = new Vector2Int(1, 2);
 
-			recorder.TryRecord(new AddEntityCommand(id, position));
+			recorder.TryRecord(null, new AddEntityCommand(id, position));
 			updater.Update();
 
 			location.Entities.Should().HaveCount(1);

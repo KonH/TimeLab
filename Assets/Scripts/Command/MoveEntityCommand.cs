@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace TimeLab.Command {
-	public sealed class MoveEntityCommand : ILocationCommand {
+	public sealed class MoveEntityCommand : LocationCommand {
 		public readonly ulong      Id;
 		public readonly Vector2Int Position;
 

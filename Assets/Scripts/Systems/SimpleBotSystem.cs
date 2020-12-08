@@ -10,15 +10,20 @@ namespace TimeLab.Systems {
 	public sealed class SimpleBotSystem : ILocationUpdater {
 		readonly Timer _timer = new Timer(0.5f);
 
+		readonly TimeProvider            _timeProvider;
 		readonly Location                _location;
 		readonly LocationCommandRecorder _recorder;
 
-		public SimpleBotSystem(Location location, LocationCommandRecorder recorder) {
-			_location = location;
-			_recorder = recorder;
+		public SimpleBotSystem(TimeProvider timeProvider, Location location, LocationCommandRecorder recorder) {
+			_timeProvider = timeProvider;
+			_location     = location;
+			_recorder     = recorder;
 		}
 
 		public void Update(float deltaTime) {
+			if ( !_timeProvider.IsRealTime ) {
+				return;
+			}
 			if ( !_timer.Tick(deltaTime) ) {
 				return;
 			}
@@ -34,7 +39,7 @@ namespace TimeLab.Systems {
 					component.MoveLeft = false;
 				}
 				var newPosition = position + (component.MoveLeft ? Vector2Int.left : Vector2Int.right);
-				_recorder.TryRecord(new MoveEntityCommand(entity.Id, newPosition));
+				_recorder.TryRecord(null, new MoveEntityCommand(entity.Id, newPosition));
 			}
 		}
 	}

@@ -29,7 +29,7 @@ namespace TimeLab.View {
 		void Update() {
 			var direction = GetDirection();
 			if ( direction != Vector2Int.zero ) {
-				_recorder.TryRecord(new MovePlayerCommand(_session.Id, direction));
+				_recorder.TryRecord(null, new MovePlayerCommand(_session.Id, direction));
 			}
 		}
 

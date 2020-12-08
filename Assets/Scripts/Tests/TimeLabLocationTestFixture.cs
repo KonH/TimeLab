@@ -24,7 +24,7 @@ namespace TimeLab.Tests {
 			var updater  = Container.Resolve<UpdateManager>();
 			var bounds   = new Rect2DInt(1, 2, 3, 4);
 
-			recorder.TryRecord(new AddLocationCommand(id, bounds));
+			recorder.TryRecord(null, new AddLocationCommand(id, bounds));
 			updater.Update();
 
 			var subContainer = Container.CreateSubContainer();

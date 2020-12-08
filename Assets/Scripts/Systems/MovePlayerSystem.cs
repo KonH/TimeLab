@@ -16,7 +16,7 @@ namespace TimeLab.Systems {
 							.Any(c => (c is PlayerComponent player) && (player.Session == session.Id)));
 					foreach ( var player in players ) {
 						var recorder = holder.Resolve<LocationCommandRecorder>(location.Id);
-						recorder.TryRecord(new MoveEntityCommand(player.Id, player.Position.Value + cmd.Direction));
+						recorder.TryRecord(cmd, new MoveEntityCommand(player.Id, player.Position.Value + cmd.Direction));
 					}
 				}
 			});

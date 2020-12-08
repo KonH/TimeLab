@@ -1,3 +1,4 @@
+using TimeLab.Command;
 using TimeLab.Shared;
 using Zenject;
 
@@ -5,12 +6,12 @@ namespace TimeLab.Manager {
 	/// <summary>
 	/// Takes commands from queue based on current time and fire signals for each command
 	/// </summary>
-	public class SignalProducer<T> where T : class {
-		readonly TimeProvider      _timeProvider;
-		readonly PermanentQueue<T> _queue;
-		readonly SignalBus         _bus;
+	public class SignalProducer<T> where T : class, ICommand {
+		readonly TimeProvider             _timeProvider;
+		readonly PermanentCommandQueue<T> _queue;
+		readonly SignalBus                _bus;
 
-		public SignalProducer(TimeProvider timeProvider, PermanentQueue<T> queue, SignalBus bus) {
+		public SignalProducer(TimeProvider timeProvider, PermanentCommandQueue<T> queue, SignalBus bus) {
 			_timeProvider = timeProvider;
 			_queue        = queue;
 			_bus          = bus;

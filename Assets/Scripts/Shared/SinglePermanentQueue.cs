@@ -5,20 +5,24 @@ namespace TimeLab.Shared {
 	/// <summary>
 	/// Represents replayable queue, each element has timestamp, associated with it
 	/// </summary>
-	public sealed class PermanentQueue<T> {
-		readonly List<QueueElement<T>> _elements = new List<QueueElement<T>>();
+	public sealed class SinglePermanentQueue<T> {
+		readonly List<QueueElement<T>> _elements;
 
 		int _lastProducedIndex = -1;
 
 		public int Count => _elements.Count;
 
+		public IReadOnlyList<QueueElement<T>> Elements => _elements;
+
+		public SinglePermanentQueue(List<QueueElement<T>> elements) {
+			_elements = elements;
+		}
+
+		public SinglePermanentQueue(): this(new List<QueueElement<T>>()) {}
+
 		public void Enqueue(double timestamp, T content) {
 			ValidateTimestamp(timestamp);
 			_elements.Add(new QueueElement<T>(timestamp, content));
-		}
-
-		public void Insert(int index, T content) {
-			_elements.Insert(index, new QueueElement<T>(0, content));
 		}
 
 		void ValidateTimestamp(double timestamp) {
@@ -43,21 +47,6 @@ namespace TimeLab.Shared {
 			}
 			content = default;
 			return false;
-		}
-
-		/// <summary>
-		/// Allow to replay commands
-		/// </summary>
-		public void Reset() {
-			_lastProducedIndex = -1;
-		}
-
-		/// <summary>
-		/// Completely forget about all recorded commands
-		/// </summary>
-		public void Clear() {
-			Reset();
-			_elements.Clear();
 		}
 	}
 }

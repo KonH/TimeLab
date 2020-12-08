@@ -29,9 +29,9 @@ namespace TimeLab.Tests {
 			var position      = new Vector2Int(1, 1);
 			var direction     = Vector2Int.left;
 
-			locRecorder.TryRecord(new AddEntityCommand(id, position, new PlayerComponent(session.Id)));
+			locRecorder.TryRecord(null, new AddEntityCommand(id, position, new PlayerComponent(session.Id)));
 			updater.Update();
-			worldRecorder.TryRecord(new MovePlayerCommand(session.Id, direction));
+			worldRecorder.TryRecord(null, new MovePlayerCommand(session.Id, direction));
 			updater.Update();
 
 			location.Entities.First().Position.Value.Should().Be(position + direction);
@@ -39,6 +39,7 @@ namespace TimeLab.Tests {
 
 		[Test]
 		public void IsEntityWithPlayerComponentNotMovedWithDifferentSession() {
+			var session       = Container.Resolve<Session>();
 			var worldRecorder = Container.Resolve<WorldCommandRecorder>();
 			var locRecorder   = SubContainer.Resolve<LocationCommandRecorder>();
 			var updater       = SubContainer.Resolve<UpdateManager>();
@@ -47,9 +48,9 @@ namespace TimeLab.Tests {
 			var position      = new Vector2Int(1, 1);
 			var direction     = Vector2Int.left;
 
-			locRecorder.TryRecord(new AddEntityCommand(id, position, new PlayerComponent(0)));
+			locRecorder.TryRecord(null, new AddEntityCommand(id, position, new PlayerComponent(session.Id + 1)));
 			updater.Update();
-			worldRecorder.TryRecord(new MovePlayerCommand(1, direction));
+			worldRecorder.TryRecord(null, new MovePlayerCommand(1, direction));
 			updater.Update();
 
 			location.Entities.First().Position.Value.Should().Be(position);
