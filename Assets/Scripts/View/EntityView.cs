@@ -18,7 +18,10 @@ namespace TimeLab.View {
 
 		[SerializeField] EntityRenderHolder _renderHolder;
 
+		public Entity Entity { get; private set; }
+
 		void Init(Entity entity) {
+			Entity = entity;
 			SetupDisposables();
 			gameObject.name = $"Entity_{entity.Id}";
 			entity.Position

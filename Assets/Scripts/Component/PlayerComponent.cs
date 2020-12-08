@@ -5,5 +5,9 @@ namespace TimeLab.Component {
 		public PlayerComponent(ulong session) {
 			Session = session;
 		}
+
+		public override string ToString() {
+			return $"[{nameof(PlayerComponent)}] {nameof(Session)}: {Session}";
+		}
 	}
 }
