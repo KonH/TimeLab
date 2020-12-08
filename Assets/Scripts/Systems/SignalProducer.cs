@@ -1,5 +1,4 @@
 using TimeLab.Shared;
-using UnityEngine;
 using Zenject;
 
 namespace TimeLab.Systems {
@@ -20,7 +19,6 @@ namespace TimeLab.Systems {
 		public void Produce() {
 			var timestamp = _timeProvider.CurrentTime;
 			while ( _queue.TryDequeue(timestamp, out var command) ) {
-				Debug.Log($"Signal {command} produced");
 				_bus.TryFire((object)command);
 			}
 		}

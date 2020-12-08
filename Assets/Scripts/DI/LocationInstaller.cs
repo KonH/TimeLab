@@ -29,6 +29,8 @@ namespace TimeLab.DI {
 			Container.DeclareSignal<CollisionCommand>();
 			Container.Bind<CollisionSystem>().AsSingle().NonLazy();
 			Container.Bind<TransferSystem>().AsSingle().NonLazy();
+
+			Container.Bind<ILocationUpdateSystem>().To<SimpleBotSystem>().AsSingle().NonLazy();
 		}
 	}
 }

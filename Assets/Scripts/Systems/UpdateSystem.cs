@@ -27,6 +27,10 @@ namespace TimeLab.Systems {
 				var container = pair.Value;
 				var producer  = container.Resolve<LocationSignalProducer>();
 				producer.Produce();
+				var updateSystems = container.ResolveAll<ILocationUpdateSystem>();
+				foreach ( var updateSystem in updateSystems ) {
+					updateSystem.Update(deltaTime);
+				}
 			}
 		}
 	}

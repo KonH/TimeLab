@@ -1,5 +1,4 @@
 using TimeLab.Shared;
-using UnityEngine;
 
 namespace TimeLab.Command {
 	/// <summary>
@@ -21,7 +20,6 @@ namespace TimeLab.Command {
 			}
 			var timestamp = _timeProvider.CurrentTime;
 			_queue.Enqueue(timestamp, command);
-			Debug.Log($"Command {command} recorded");
 			return true;
 		}
 	}
