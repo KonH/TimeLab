@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TimeLab.Command;
 using TimeLab.Manager;
+using TimeLab.ViewModel;
 using UnityEngine;
 using Zenject;
 
@@ -16,17 +17,19 @@ namespace TimeLab.View {
 			[KeyCode.DownArrow]  = Vector2Int.down
 		};
 
+		Session              _session;
 		WorldCommandRecorder _recorder;
 
 		[Inject]
-		public void Init(WorldCommandRecorder recorder) {
+		public void Init(Session session, WorldCommandRecorder recorder) {
+			_session  = session;
 			_recorder = recorder;
 		}
 
 		void Update() {
 			var direction = GetDirection();
 			if ( direction != Vector2Int.zero ) {
-				_recorder.TryRecord(new MovePlayerCommand(direction));
+				_recorder.TryRecord(new MovePlayerCommand(_session.Id, direction));
 			}
 		}
 

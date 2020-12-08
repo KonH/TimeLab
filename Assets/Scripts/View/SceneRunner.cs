@@ -34,5 +34,11 @@ namespace TimeLab.View {
 			_timelineController.RestartWithReplay();
 			SceneManager.LoadScene(0);
 		}
+
+		[ContextMenu(nameof(TravelBackward))]
+		public void TravelBackward() {
+			_timelineController.TravelBackward();
+			SceneManager.LoadScene(0);
+		}
 	}
 }

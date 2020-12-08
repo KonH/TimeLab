@@ -7,13 +7,13 @@ using Zenject;
 
 namespace TimeLab.Systems {
 	public sealed class MovePlayerSystem {
-		public MovePlayerSystem(World world, SignalBus bus, LocationContainerHolder holder) {
+		public MovePlayerSystem(Session session, World world, SignalBus bus, LocationContainerHolder holder) {
 			bus.Subscribe<MovePlayerCommand>(cmd => {
 				foreach ( var location in world.Locations ) {
 					var players = location
 						.Entities
 						.Where(e => e.Components
-							.Any(c => c is PlayerComponent));
+							.Any(c => (c is PlayerComponent player) && (player.Session == session.Id)));
 					foreach ( var player in players ) {
 						var recorder = holder.Resolve<LocationCommandRecorder>(location.Id);
 						recorder.TryRecord(new MoveEntityCommand(player.Id, player.Position.Value + cmd.Direction));

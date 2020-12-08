@@ -1,14 +1,17 @@
 using TimeLab.Command;
 using TimeLab.Component;
 using TimeLab.Shared;
+using TimeLab.ViewModel;
 using UnityEngine;
 
 namespace TimeLab.Manager {
 	public sealed class WorldGenerator {
+		readonly Session        _session;
 		readonly CommandStorage _storage;
 		readonly IdGenerator    _idGenerator;
 
-		public WorldGenerator(CommandStorage storage, IdGenerator idGenerator) {
+		public WorldGenerator(Session session, CommandStorage storage, IdGenerator idGenerator) {
+			_session     = session;
 			_storage     = storage;
 			_idGenerator = idGenerator;
 		}
@@ -23,7 +26,7 @@ namespace TimeLab.Manager {
 			firstLocationCommands.Enqueue(0, new AddEntityCommand(
 				_idGenerator.GetNextId(),
 				Vector2Int.zero,
-				new PlayerComponent(),
+				new PlayerComponent(_session.Id),
 				new RenderComponent("Player")));
 			firstLocationCommands.Enqueue(0, new AddEntityCommand(
 				_idGenerator.GetNextId(),

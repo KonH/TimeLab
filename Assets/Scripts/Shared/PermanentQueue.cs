@@ -17,6 +17,10 @@ namespace TimeLab.Shared {
 			_elements.Add(new QueueElement<T>(timestamp, content));
 		}
 
+		public void Insert(int index, T content) {
+			_elements.Insert(index, new QueueElement<T>(0, content));
+		}
+
 		void ValidateTimestamp(double timestamp) {
 			if ( _elements.Count == 0 ) {
 				return;
