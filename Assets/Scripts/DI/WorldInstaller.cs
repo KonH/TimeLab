@@ -25,6 +25,9 @@ namespace TimeLab.DI {
 
 			Container.DeclareSignal<MovePlayerCommand>();
 			Container.Bind<MovePlayerSystem>().AsSingle().NonLazy();
+
+			Container.DeclareSignal<AddPlayerCommand>();
+			Container.Bind<AddPlayerSystem>().AsSingle().NonLazy();
 		}
 	}
 }

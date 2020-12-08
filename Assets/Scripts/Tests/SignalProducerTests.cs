@@ -15,9 +15,9 @@ namespace TimeLab.Tests {
 		[SetUp]
 		public void Init() {
 			SignalBusInstaller.Install(Container);
-			Container.DeclareSignal<string>();
+			Container.DeclareSignal<TestCommand>();
 			var bus  = Container.Resolve<SignalBus>();
-			bus.Subscribe<string>(() => _isProduced = true);
+			bus.Subscribe<TestCommand>(() => _isProduced = true);
 			var time = new TimeProvider(new TimeSettings(0));
 			_queue    = new PermanentCommandQueue<ICommand>();
 			_producer = new SignalProducer<ICommand>(time, _queue, bus);

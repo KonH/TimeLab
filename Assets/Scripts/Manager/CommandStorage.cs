@@ -6,16 +6,16 @@ namespace TimeLab.Manager {
 	/// Storage for all game commands to keep state
 	/// </summary>
 	public sealed class CommandStorage {
-		readonly PermanentCommandQueue<WorldCommand> _worldCommands = new PermanentCommandQueue<WorldCommand>();
+		readonly PermanentCommandQueue<IWorldCommand> _worldCommands = new PermanentCommandQueue<IWorldCommand>();
 
-		readonly Dictionary<ulong, PermanentCommandQueue<LocationCommand>> _locationCommands
-			= new Dictionary<ulong, PermanentCommandQueue<LocationCommand>>();
+		readonly Dictionary<ulong, PermanentCommandQueue<ILocationCommand>> _locationCommands
+			= new Dictionary<ulong, PermanentCommandQueue<ILocationCommand>>();
 
-		public PermanentCommandQueue<WorldCommand> GetWorldCommands() => _worldCommands;
+		public PermanentCommandQueue<IWorldCommand> GetWorldCommands() => _worldCommands;
 
-		public PermanentCommandQueue<LocationCommand> GetLocationCommands(ulong id) {
+		public PermanentCommandQueue<ILocationCommand> GetLocationCommands(ulong id) {
 			if ( !_locationCommands.TryGetValue(id, out var commands) ) {
-				commands = new PermanentCommandQueue<LocationCommand>();
+				commands = new PermanentCommandQueue<ILocationCommand>();
 				_locationCommands.Add(id, commands);
 			}
 			return commands;

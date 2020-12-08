@@ -1,5 +1,5 @@
 namespace TimeLab.Command {
-	public sealed class CollisionCommand : LocationCommand {
+	public sealed class CollisionCommand : ILocationCommand {
 		public readonly ulong Source;
 		public readonly ulong Target;
 

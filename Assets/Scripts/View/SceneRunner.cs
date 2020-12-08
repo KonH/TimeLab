@@ -1,26 +1,26 @@
 using TimeLab.Manager;
-using TimeLab.Shared;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;
 
 namespace TimeLab.View {
 	public sealed class SceneRunner : MonoBehaviour {
-		TimeProvider       _timeProvider;
 		WorldGenerator     _generator;
 		TimelineController _timelineController;
 
 		[Inject]
-		public void Init(TimeProvider timeProvider, WorldGenerator generator, TimelineController timelineController) {
-			_timeProvider       = timeProvider;
+		public void Init(WorldGenerator generator, TimelineController timelineController) {
 			_generator          = generator;
 			_timelineController = timelineController;
 		}
 
 		void Start() {
-			if ( _timeProvider.IsRealTime ) {
-				_generator.Generate();
-			}
+			_generator.Generate();
+		}
+
+		[ContextMenu(nameof(FirstStart))]
+		public void FirstStart() {
+			_timelineController.FirstStart();
 		}
 
 		[ContextMenu(nameof(RestartClean))]

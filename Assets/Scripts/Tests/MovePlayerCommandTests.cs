@@ -29,9 +29,9 @@ namespace TimeLab.Tests {
 			var position      = new Vector2Int(1, 1);
 			var direction     = Vector2Int.left;
 
-			locRecorder.TryRecord(null, new AddEntityCommand(id, position, new PlayerComponent(session.Id)));
+			locRecorder.Record(new AddEntityCommand(id, position, new PlayerComponent(session.Id)));
 			updater.Update();
-			worldRecorder.TryRecord(null, new MovePlayerCommand(session.Id, direction));
+			worldRecorder.Record(new MovePlayerCommand(session.Id, direction));
 			updater.Update();
 
 			location.Entities.First().Position.Value.Should().Be(position + direction);
@@ -48,9 +48,9 @@ namespace TimeLab.Tests {
 			var position      = new Vector2Int(1, 1);
 			var direction     = Vector2Int.left;
 
-			locRecorder.TryRecord(null, new AddEntityCommand(id, position, new PlayerComponent(session.Id + 1)));
+			locRecorder.Record(new AddEntityCommand(id, position, new PlayerComponent(session.Id + 1)));
 			updater.Update();
-			worldRecorder.TryRecord(null, new MovePlayerCommand(1, direction));
+			worldRecorder.Record(new MovePlayerCommand(session.Id, direction));
 			updater.Update();
 
 			location.Entities.First().Position.Value.Should().Be(position);

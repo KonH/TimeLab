@@ -1,7 +1,7 @@
 using TimeLab.Shared;
 
 namespace TimeLab.Command {
-	public sealed class AddLocationCommand : WorldCommand {
+	public sealed class AddLocationCommand : IWorldCommand {
 		public readonly ulong     Id;
 		public readonly Rect2DInt Bounds;
 

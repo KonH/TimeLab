@@ -1,6 +1,4 @@
-using System.Linq;
 using TimeLab.Command;
-using TimeLab.Component;
 using TimeLab.Shared;
 using TimeLab.ViewModel;
 
@@ -12,19 +10,23 @@ namespace TimeLab.Manager {
 		readonly TimeSettings   _timeSettings;
 		readonly TimeProvider   _timeProvider;
 		readonly CommandStorage _commandStorage;
-		readonly World          _world;
 		readonly Session        _session;
 		readonly IdGenerator    _idGenerator;
 
 		public TimelineController(
 			TimeSettings timeSettings, TimeProvider timeProvider, CommandStorage commandStorage,
-			World world, Session session, IdGenerator idGenerator) {
+			Session session, IdGenerator idGenerator) {
 			_timeSettings   = timeSettings;
 			_timeProvider   = timeProvider;
 			_commandStorage = commandStorage;
-			_world          = world;
 			_session        = session;
 			_idGenerator    = idGenerator;
+		}
+
+		public void FirstStart() {
+			_commandStorage.GetWorldCommands().Enqueue(_timeProvider.CurrentTime, new AddPlayerCommand(
+				_idGenerator.GetNextId(),
+				_session.Id));
 		}
 
 		public void Restart() {
@@ -44,21 +46,10 @@ namespace TimeLab.Manager {
 		}
 
 		void AddCurrentPlayerForNewWorld() {
-			var (location, player) = _world.Locations
-				.Select(l => (location: l, players: l.Entities
-					.Where(e => e.Components
-						.OfType<PlayerComponent>()
-						.Any(c => c.Session == _session.Id))
-					.ToArray()))
-				.Where(p => (p.players.Length > 0))
-				.Select(p => (p.location, p.players.First()))
-				.First();
 			_session.Id++;
-			var locationCommands = _commandStorage.GetLocationCommands(location.Id);
-			var newComponents    = player.Components.Where(c => !(c is PlayerComponent)).ToList();
-			newComponents.Add(new PlayerComponent(_session.Id));
-			locationCommands.Enqueue(0, new AddEntityCommand(
-				_idGenerator.GetNextId(), player.Position.Value, newComponents.ToArray()));
+			var commands = _commandStorage.GetWorldCommands();
+			commands.Enqueue(0, new AddPlayerCommand(
+				_idGenerator.GetNextId(), _session.Id));
 		}
 	}
 }

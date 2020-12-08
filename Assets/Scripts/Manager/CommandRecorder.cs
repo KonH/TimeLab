@@ -15,13 +15,9 @@ namespace TimeLab.Manager {
 			_queue        = queue;
 		}
 
-		public bool TryRecord(ICommand parent, T command) {
+		public void Record(T command) {
 			var timestamp = _timeProvider.CurrentTime;
-			if ( (parent != null) && (parent.IsHistory) ) {
-				return false;
-			}
 			_queue.Enqueue(timestamp, command);
-			return true;
 		}
 	}
 }

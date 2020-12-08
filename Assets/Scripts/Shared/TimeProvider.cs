@@ -6,8 +6,6 @@ namespace TimeLab.Shared {
 		public double RealStartTime { get; }
 		public double CurrentTime   { get; private set; }
 
-		public bool IsRealTime => CurrentTime >= RealStartTime;
-
 		public TimeProvider(TimeSettings settings) {
 			RealStartTime = settings.RealStartTime;
 		}

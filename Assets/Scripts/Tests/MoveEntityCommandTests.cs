@@ -24,8 +24,8 @@ namespace TimeLab.Tests {
 			var id       = 2ul;
 			var position = new Vector2Int(1, 2);
 
-			recorder.TryRecord(null, new AddEntityCommand(id, Vector2Int.zero));
-			recorder.TryRecord(null, new MoveEntityCommand(id, position));
+			recorder.Record(new AddEntityCommand(id, Vector2Int.zero));
+			recorder.Record(new MoveEntityCommand(id, position));
 			updater.Update();
 
 			location.Entities.First().Position.Value.Should().Be(position);

@@ -23,7 +23,7 @@ namespace TimeLab.Tests {
 			var id       = 1ul;
 			var bounds   = new Rect2DInt(1, 2, 3, 4);
 
-			recorder.TryRecord(null, new AddLocationCommand(id, bounds));
+			recorder.Record(new AddLocationCommand(id, bounds));
 			updater.Update();
 
 			world.Locations.Should().HaveCount(1);

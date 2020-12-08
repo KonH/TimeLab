@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using TimeLab.Command;
 using TimeLab.Shared;
 
@@ -7,11 +9,11 @@ namespace TimeLab.Manager {
 		SinglePermanentQueue<T> _history = new SinglePermanentQueue<T>();
 		SinglePermanentQueue<T> _current = new SinglePermanentQueue<T>();
 
-		public int Count => _history.Count + _current.Count;
-
-		public void Enqueue(double timestamp, T command) {
+		public void Enqueue(double timestamp, T command) =>
 			_current.Enqueue(timestamp, command);
-		}
+
+		public void Insert(int position, T command) =>
+			_current.Insert(position, command);
 
 		public bool TryDequeue(double timestamp, out T content) =>
 			_history.TryDequeue(timestamp, out content) || _current.TryDequeue(timestamp, out content);
@@ -33,13 +35,13 @@ namespace TimeLab.Manager {
 		}
 
 		static SinglePermanentQueue<T> Merge(SinglePermanentQueue<T> history, SinglePermanentQueue<T> current) {
-			var allElements = new List<QueueElement<T>>(history.Count + current.Count);
+			var currentInputs = current.Elements
+				.Where(c => c.Content.GetType().GetCustomAttribute<InputCommandAttribute>() != null)
+				.ToArray();
+			var allElements = new List<QueueElement<T>>(history.Count + currentInputs.Length);
 			allElements.AddRange(history.Elements);
-			allElements.AddRange(current.Elements);
+			allElements.AddRange(currentInputs);
 			allElements.Sort(Compare);
-			foreach ( var element in allElements ) {
-				element.Content.IsHistory = true;
-			}
 			return new SinglePermanentQueue<T>(allElements);
 		}
 
