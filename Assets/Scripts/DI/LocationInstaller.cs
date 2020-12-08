@@ -1,4 +1,5 @@
 using TimeLab.Command;
+using TimeLab.Manager;
 using TimeLab.Systems;
 using TimeLab.ViewModel;
 using Zenject;
@@ -30,7 +31,7 @@ namespace TimeLab.DI {
 			Container.Bind<CollisionSystem>().AsSingle().NonLazy();
 			Container.Bind<TransferSystem>().AsSingle().NonLazy();
 
-			Container.Bind<ILocationUpdateSystem>().To<SimpleBotSystem>().AsSingle().NonLazy();
+			Container.Bind<ILocationUpdater>().To<SimpleBotSystem>().AsSingle().NonLazy();
 		}
 	}
 }

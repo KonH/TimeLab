@@ -3,7 +3,7 @@ using TimeLab.Component;
 using TimeLab.Shared;
 using UnityEngine;
 
-namespace TimeLab.Systems {
+namespace TimeLab.Manager {
 	public sealed class WorldGenerator {
 		readonly CommandStorage _storage;
 		readonly IdGenerator    _idGenerator;

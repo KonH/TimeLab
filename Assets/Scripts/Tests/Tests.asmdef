@@ -11,7 +11,8 @@
         "Command",
         "Systems",
         "DI",
-        "Component"
+        "Component",
+        "Manager"
     ],
     "includePlatforms": [
         "Editor"

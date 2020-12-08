@@ -1,4 +1,4 @@
-namespace TimeLab.Systems {
+namespace TimeLab.Manager {
 	/// <summary>
 	/// Creates incremental IDs for all state entries
 	/// </summary>

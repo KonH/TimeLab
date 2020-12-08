@@ -1,16 +1,16 @@
-using TimeLab.Systems;
+using TimeLab.Manager;
 using UnityEngine;
 using Zenject;
 
 namespace TimeLab.View {
 	public sealed class WorldUpdater : MonoBehaviour {
-		UpdateSystem _system;
+		UpdateManager _manager;
 
 		[Inject]
-		public void Init(UpdateSystem system) {
-			_system = system;
+		public void Init(UpdateManager manager) {
+			_manager = manager;
 		}
 
-		void Update() => _system.Update(Time.deltaTime);
+		void Update() => _manager.Update(Time.deltaTime);
 	}
 }

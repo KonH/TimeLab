@@ -1,6 +1,6 @@
 using FluentAssertions;
 using NUnit.Framework;
-using TimeLab.Command;
+using TimeLab.Manager;
 using TimeLab.Shared;
 
 namespace TimeLab.Tests {

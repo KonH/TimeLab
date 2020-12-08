@@ -1,7 +1,7 @@
 using FluentAssertions;
 using NUnit.Framework;
+using TimeLab.Manager;
 using TimeLab.Shared;
-using TimeLab.Systems;
 using Zenject;
 
 namespace TimeLab.Tests {

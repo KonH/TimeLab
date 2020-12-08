@@ -1,6 +1,6 @@
 using TimeLab.Shared;
 
-namespace TimeLab.Command {
+namespace TimeLab.Manager {
 	/// <summary>
 	/// Takes commands from different sources and writes them into permanent queue,
 	/// but only if it isn't simulation, in that case it leads to duplicated reactions

@@ -1,7 +1,6 @@
-using TimeLab.Component;
 using UnityEngine;
 
-namespace TimeLab.Command {
+namespace TimeLab.Component {
 	public sealed class PortalComponent : IComponent {
 		public readonly ulong      TargetLocation;
 		public readonly Vector2Int TargetPosition;

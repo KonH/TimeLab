@@ -1,11 +1,11 @@
 using System.Linq;
 using TimeLab.ViewModel;
 
-namespace TimeLab.Systems {
-	public sealed class PortalSystem {
+namespace TimeLab.Manager {
+	public sealed class PortalManager {
 		readonly World _world;
 
-		public PortalSystem(World world) {
+		public PortalManager(World world) {
 			_world = world;
 		}
 

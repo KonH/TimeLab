@@ -1,4 +1,5 @@
 using TimeLab.Command;
+using TimeLab.Manager;
 using TimeLab.Shared;
 using TimeLab.Systems;
 using TimeLab.ViewModel;
@@ -16,8 +17,8 @@ namespace TimeLab.DI {
 			Container.Bind<WorldSignalProducer>().AsSingle().NonLazy();
 			Container.Bind<LocationContainerHolder>().AsSingle();
 			Container.Bind<IdGenerator>().AsSingle();
-			Container.Bind<UpdateSystem>().AsSingle();
-			Container.Bind<PortalSystem>().AsSingle();
+			Container.Bind<UpdateManager>().AsSingle();
+			Container.Bind<PortalManager>().AsSingle();
 
 			Container.DeclareSignal<AddLocationCommand>();
 			Container.Bind<AddLocationSystem>().AsSingle().NonLazy();

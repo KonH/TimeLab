@@ -2,6 +2,7 @@ using System.Linq;
 using NUnit.Framework;
 using TimeLab.Command;
 using TimeLab.DI;
+using TimeLab.Manager;
 using TimeLab.Shared;
 using TimeLab.Systems;
 using TimeLab.ViewModel;
@@ -20,7 +21,7 @@ namespace TimeLab.Tests {
 		protected DiContainer CreateLocation(ulong id = 1ul) {
 			Container.Resolve<AddLocationSystem>();
 			var recorder = Container.Resolve<WorldCommandRecorder>();
-			var updater  = Container.Resolve<UpdateSystem>();
+			var updater  = Container.Resolve<UpdateManager>();
 			var bounds   = new Rect2DInt(1, 2, 3, 4);
 
 			recorder.TryRecord(new AddLocationCommand(id, bounds));

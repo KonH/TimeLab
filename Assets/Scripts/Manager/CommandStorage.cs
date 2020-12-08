@@ -1,7 +1,8 @@
 using System.Collections.Generic;
+using TimeLab.Command;
 using TimeLab.Shared;
 
-namespace TimeLab.Command {
+namespace TimeLab.Manager {
 	/// <summary>
 	/// Storage for all game commands to keep state
 	/// </summary>

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Zenject;
 
-namespace TimeLab.Systems {
+namespace TimeLab.Manager {
 	/// <summary>
 	/// Holds specific sub-containers for each location
 	/// </summary>

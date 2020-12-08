@@ -1,6 +1,8 @@
 using FluentAssertions;
 using NUnit.Framework;
 using TimeLab.Command;
+using TimeLab.Component;
+using TimeLab.Manager;
 using TimeLab.Systems;
 using TimeLab.ViewModel;
 using UnityEngine;
@@ -12,7 +14,7 @@ namespace TimeLab.Tests {
 
 		LocationCommandRecorder _recorder;
 		World                   _world;
-		UpdateSystem            _updater;
+		UpdateManager            _updater;
 
 		[SetUp]
 		public override void Init() {
@@ -24,8 +26,8 @@ namespace TimeLab.Tests {
 			secondSubContainer.Resolve<AddEntitySystem>();
 			_recorder.TryRecord(new AddEntityCommand(4, Vector2Int.one, new PortalComponent(SecondLocationId, Vector2Int.zero)));
 			_world   = Container.Resolve<World>();
-			_updater = Container.Resolve<UpdateSystem>();
-			SubContainer.Resolve<PortalSystem>();
+			_updater = Container.Resolve<UpdateManager>();
+			SubContainer.Resolve<PortalManager>();
 		}
 
 		[Test]

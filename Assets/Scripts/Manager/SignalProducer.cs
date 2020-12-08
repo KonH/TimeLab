@@ -1,7 +1,7 @@
 using TimeLab.Shared;
 using Zenject;
 
-namespace TimeLab.Systems {
+namespace TimeLab.Manager {
 	/// <summary>
 	/// Takes commands from queue based on current time and fire signals for each command
 	/// </summary>

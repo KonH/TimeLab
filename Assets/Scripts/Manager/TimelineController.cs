@@ -1,7 +1,6 @@
-using TimeLab.Command;
 using TimeLab.Shared;
 
-namespace TimeLab.Systems {
+namespace TimeLab.Manager {
 	/// <summary>
 	/// Operates with current game timeline
 	/// </summary>

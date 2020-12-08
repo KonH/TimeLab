@@ -2,6 +2,7 @@ using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 using TimeLab.Command;
+using TimeLab.Manager;
 using TimeLab.Systems;
 using TimeLab.ViewModel;
 using UnityEngine;
@@ -17,7 +18,7 @@ namespace TimeLab.Tests {
 		[Test]
 		public void IsEntityAdded() {
 			var recorder = SubContainer.Resolve<LocationCommandRecorder>();
-			var updater  = SubContainer.Resolve<UpdateSystem>();
+			var updater  = SubContainer.Resolve<UpdateManager>();
 			var location = SubContainer.Resolve<Location>();
 			var id       = 2ul;
 			var position = new Vector2Int(1, 2);

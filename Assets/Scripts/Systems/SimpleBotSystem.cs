@@ -1,12 +1,13 @@
 using System.Linq;
 using TimeLab.Command;
 using TimeLab.Component;
+using TimeLab.Manager;
 using TimeLab.Shared;
 using TimeLab.ViewModel;
 using UnityEngine;
 
 namespace TimeLab.Systems {
-	public sealed class SimpleBotSystem : ILocationUpdateSystem {
+	public sealed class SimpleBotSystem : ILocationUpdater {
 		readonly Timer _timer = new Timer(0.5f);
 
 		readonly Location                _location;
