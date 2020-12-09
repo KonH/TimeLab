@@ -1,5 +1,5 @@
 using TimeLab.Command;
-using TimeLab.Shared;
+using TimeLab.ViewModel;
 using Zenject;
 
 namespace TimeLab.Manager {
@@ -7,18 +7,18 @@ namespace TimeLab.Manager {
 	/// Takes commands from queue based on current time and fire signals for each command
 	/// </summary>
 	public class SignalProducer<T> where T : class, ICommand {
-		readonly TimeProvider             _timeProvider;
+		readonly World                    _world;
 		readonly PermanentCommandQueue<T> _queue;
 		readonly SignalBus                _bus;
 
-		public SignalProducer(TimeProvider timeProvider, PermanentCommandQueue<T> queue, SignalBus bus) {
-			_timeProvider = timeProvider;
-			_queue        = queue;
-			_bus          = bus;
+		public SignalProducer(World world, PermanentCommandQueue<T> queue, SignalBus bus) {
+			_world = world;
+			_queue = queue;
+			_bus   = bus;
 		}
 
 		public void Produce() {
-			var timestamp = _timeProvider.CurrentTime;
+			var timestamp = _world.Time.Current.Value;
 			while ( _queue.TryDequeue(timestamp, out var command) ) {
 				_bus.TryFire((object)command);
 			}

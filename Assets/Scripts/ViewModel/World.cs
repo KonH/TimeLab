@@ -5,6 +5,8 @@ namespace TimeLab.ViewModel {
 	/// Current game state
 	/// </summary>
 	public sealed class World {
+		public Time Time { get; } = new Time();
+
 		public ReactiveCollection<Location> Locations { get; } = new ReactiveCollection<Location>();
 	}
 }

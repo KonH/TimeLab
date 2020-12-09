@@ -1,5 +1,5 @@
 using TimeLab.Command;
-using TimeLab.Shared;
+using TimeLab.ViewModel;
 
 namespace TimeLab.Manager {
 	/// <summary>
@@ -7,16 +7,16 @@ namespace TimeLab.Manager {
 	/// but only if it isn't simulation, in that case it leads to duplicated reactions
 	/// </summary>
 	public class CommandRecorder<T> where T : class, ICommand {
-		readonly TimeProvider             _timeProvider;
+		readonly World                    _world;
 		readonly PermanentCommandQueue<T> _queue;
 
-		public CommandRecorder(TimeProvider timeProvider, PermanentCommandQueue<T> queue) {
-			_timeProvider = timeProvider;
-			_queue        = queue;
+		public CommandRecorder(World world, PermanentCommandQueue<T> queue) {
+			_world = world;
+			_queue = queue;
 		}
 
 		public void Record(T command) {
-			var timestamp = _timeProvider.CurrentTime;
+			var timestamp = _world.Time.Current.Value;
 			_queue.Enqueue(timestamp, command);
 		}
 	}

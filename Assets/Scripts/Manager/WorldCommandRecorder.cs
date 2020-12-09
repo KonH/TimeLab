@@ -1,9 +1,9 @@
 using TimeLab.Command;
-using TimeLab.Shared;
+using TimeLab.ViewModel;
 
 namespace TimeLab.Manager {
 	public sealed class WorldCommandRecorder : CommandRecorder<IWorldCommand> {
-		public WorldCommandRecorder(TimeProvider timeProvider, CommandStorage storage) :
-			base(timeProvider, storage.GetWorldCommands()) {}
+		public WorldCommandRecorder(World world, CommandStorage storage) :
+			base(world, storage.GetWorldCommands()) {}
 	}
 }

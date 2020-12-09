@@ -1,5 +1,4 @@
 using TimeLab.Command;
-using TimeLab.Shared;
 using TimeLab.ViewModel;
 
 namespace TimeLab.Manager {
@@ -7,40 +6,34 @@ namespace TimeLab.Manager {
 	/// Operates with current game timeline
 	/// </summary>
 	public sealed class TimelineController {
-		readonly TimeSettings   _timeSettings;
-		readonly TimeProvider   _timeProvider;
+		readonly World          _world;
 		readonly CommandStorage _commandStorage;
 		readonly Session        _session;
 		readonly IdGenerator    _idGenerator;
 
 		public TimelineController(
-			TimeSettings timeSettings, TimeProvider timeProvider, CommandStorage commandStorage,
-			Session session, IdGenerator idGenerator) {
-			_timeSettings   = timeSettings;
-			_timeProvider   = timeProvider;
+			World world, CommandStorage commandStorage, Session session, IdGenerator idGenerator) {
+			_world          = world;
 			_commandStorage = commandStorage;
 			_session        = session;
 			_idGenerator    = idGenerator;
 		}
 
 		public void FirstStart() {
-			_commandStorage.GetWorldCommands().Enqueue(_timeProvider.CurrentTime, new AddPlayerCommand(
+			_commandStorage.GetWorldCommands().Enqueue(_world.Time.Current.Value, new AddPlayerCommand(
 				_idGenerator.GetNextId(),
 				_session.Id));
 		}
 
 		public void Restart() {
-			_timeSettings.Reset(0);
 			_commandStorage.Clear();
 		}
 
 		public void RestartWithReplay() {
-			_timeSettings.Reset(_timeProvider.CurrentTime);
 			_commandStorage.Reset();
 		}
 
 		public void TravelBackward() {
-			_timeSettings.Reset(_timeProvider.CurrentTime);
 			_commandStorage.Reset();
 			AddCurrentPlayerForNewWorld();
 		}

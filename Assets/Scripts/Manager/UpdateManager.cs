@@ -1,26 +1,26 @@
-using TimeLab.Shared;
+using TimeLab.ViewModel;
 
 namespace TimeLab.Manager {
 	/// <summary>
 	/// Produce all recorded commands for world and each location
 	/// </summary>
 	public sealed class UpdateManager {
-		readonly TimeProvider            _timeProvider;
+		readonly World                   _world;
 		readonly WorldSignalProducer     _signalProducer;
 		readonly LocationContainerHolder _holder;
-		readonly PortalManager            _portalManager;
+		readonly PortalManager           _portalManager;
 
 		public UpdateManager(
-			TimeProvider timeProvider, WorldSignalProducer signalProducer, LocationContainerHolder holder,
+			World world, WorldSignalProducer signalProducer, LocationContainerHolder holder,
 			PortalManager portalManager) {
-			_timeProvider   = timeProvider;
+			_world          = world;
 			_signalProducer = signalProducer;
 			_holder         = holder;
-			_portalManager   = portalManager;
+			_portalManager  = portalManager;
 		}
 
 		public void Update(float deltaTime = 0) {
-			_timeProvider.Advance(deltaTime);
+			_world.Time.Current.Value += deltaTime;
 			_portalManager.Flush();
 			_signalProducer.Produce();
 			foreach ( var pair in _holder.LocationContainers ) {

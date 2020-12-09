@@ -2,7 +2,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using TimeLab.Command;
 using TimeLab.Manager;
-using TimeLab.Shared;
+using TimeLab.ViewModel;
 using Zenject;
 
 namespace TimeLab.Tests {
@@ -18,9 +18,9 @@ namespace TimeLab.Tests {
 			Container.DeclareSignal<TestCommand>();
 			var bus  = Container.Resolve<SignalBus>();
 			bus.Subscribe<TestCommand>(() => _isProduced = true);
-			var time = new TimeProvider(new TimeSettings(0));
+			var world = new World();
 			_queue    = new PermanentCommandQueue<ICommand>();
-			_producer = new SignalProducer<ICommand>(time, _queue, bus);
+			_producer = new SignalProducer<ICommand>(world, _queue, bus);
 		}
 
 		[Test]

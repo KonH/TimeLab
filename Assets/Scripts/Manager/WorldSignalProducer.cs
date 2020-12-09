@@ -1,10 +1,10 @@
 using TimeLab.Command;
-using TimeLab.Shared;
+using TimeLab.ViewModel;
 using Zenject;
 
 namespace TimeLab.Manager {
 	public sealed class WorldSignalProducer : SignalProducer<IWorldCommand> {
-		public WorldSignalProducer(TimeProvider timeProvider, CommandStorage storage, SignalBus bus) :
-			base(timeProvider, storage.GetWorldCommands(), bus) {}
+		public WorldSignalProducer(World world, CommandStorage storage, SignalBus bus) :
+			base(world, storage.GetWorldCommands(), bus) {}
 	}
 }
