@@ -15,6 +15,7 @@ namespace TimeLab.Tests {
 			base.Init();
 			Container.Resolve<MovePlayerSystem>();
 			SubContainer.Resolve<AddEntitySystem>();
+			SubContainer.Resolve<AddComponentSystem>();
 			SubContainer.Resolve<MoveEntitySystem>();
 		}
 
@@ -29,7 +30,8 @@ namespace TimeLab.Tests {
 			var position      = new Vector2Int(1, 1);
 			var direction     = Vector2Int.left;
 
-			locRecorder.Record(new AddEntityCommand(id, position, new PlayerComponent(session.Id)));
+			locRecorder.Record(new AddEntityCommand(id, position));
+			locRecorder.Record(new AddComponentCommand(id, new PlayerComponent(session.Id)));
 			updater.Update();
 			worldRecorder.Record(new MovePlayerCommand(session.Id, direction));
 			updater.Update();
@@ -48,7 +50,8 @@ namespace TimeLab.Tests {
 			var position      = new Vector2Int(1, 1);
 			var direction     = Vector2Int.left;
 
-			locRecorder.Record(new AddEntityCommand(id, position, new PlayerComponent(session.Id + 1)));
+			locRecorder.Record(new AddEntityCommand(id, position));
+			locRecorder.Record(new AddComponentCommand(id, new PlayerComponent(session.Id + 1)));
 			updater.Update();
 			worldRecorder.Record(new MovePlayerCommand(session.Id, direction));
 			updater.Update();

@@ -21,10 +21,12 @@ namespace TimeLab.Tests {
 			base.Init();
 			_recorder = SubContainer.Resolve<LocationCommandRecorder>();
 			SubContainer.Resolve<AddEntitySystem>();
+			SubContainer.Resolve<AddComponentSystem>();
 			_recorder.Record(new AddEntityCommand(EntityId, Vector2Int.zero));
 			var secondSubContainer = CreateLocation(SecondLocationId);
 			secondSubContainer.Resolve<AddEntitySystem>();
-			_recorder.Record(new AddEntityCommand(4, Vector2Int.one, new PortalComponent(SecondLocationId, Vector2Int.zero)));
+			_recorder.Record(new AddEntityCommand(4, Vector2Int.one));
+			_recorder.Record(new AddComponentCommand(4, new PortalComponent(SecondLocationId, Vector2Int.zero)));
 			_world   = Container.Resolve<World>();
 			_updater = Container.Resolve<UpdateManager>();
 			SubContainer.Resolve<PortalManager>();

@@ -8,9 +8,6 @@ namespace TimeLab.Systems {
 			bus.Subscribe<AddEntityCommand>(cmd => {
 				var entity = new Entity(cmd.Id);
 				entity.Position.Value = cmd.Position;
-				foreach ( var component in cmd.Components ) {
-					entity.Components.Add(component);
-				}
 				location.Entities.Add(entity);
 			});
 		}

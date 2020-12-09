@@ -11,12 +11,16 @@ namespace TimeLab.Systems {
 		public AddPlayerSystem(World world, SignalBus bus, CommandStorage storage) {
 			bus.Subscribe<AddPlayerCommand>(cmd => {
 				var locationId = world.Locations.First().Id;
+				var commands   = storage.GetLocationCommands(locationId);
+				var time       = world.Time.Current.Value;
+				commands.Enqueue(time, new AddEntityCommand(cmd.Id, Vector2Int.zero));
 				var components = new IComponent[] {
 					new RenderComponent("Player"),
 					new PlayerComponent(cmd.Session)
 				};
-				storage.GetLocationCommands(locationId).Enqueue(
-					world.Time.Current.Value, new AddEntityCommand(cmd.Id, Vector2Int.zero, components));
+				foreach ( var component in components ) {
+					commands.Enqueue(time, new AddComponentCommand(cmd.Id, component));
+				}
 			});
 		}
 	}

@@ -22,26 +22,28 @@ namespace TimeLab.View {
 		public void Init(Entity entity) {
 			SetupDisposables();
 			var renderComponents = entity.Components
-				.OfType<RenderComponent>()
-				.ToReactiveCollection();
+				.OfType<RenderComponent>();
 			ChangeRender(renderComponents.FirstOrDefault());
-			renderComponents
+			entity.Components
 				.ObserveAdd()
+				.Select(ev => ev.Value is RenderComponent render ? render : null)
+				.Where(r => (r != null))
 				.Subscribe(OnComponentAdd)
 				.AddTo(Disposables);
-			renderComponents
+			entity.Components
 				.ObserveRemove()
+				.Select(ev => ev.Value is RenderComponent render ? render : null)
+				.Where(r => (r != null))
 				.Subscribe(OnComponentRemove)
 				.AddTo(Disposables);
 		}
 
-		void OnComponentAdd(CollectionAddEvent<RenderComponent> ev) => ChangeRender(ev.Value);
+		void OnComponentAdd(RenderComponent render) => ChangeRender(render);
 
-		void OnComponentRemove(CollectionRemoveEvent<RenderComponent> ev) => ChangeRender(ev.Value);
+		void OnComponentRemove(RenderComponent _) => ChangeRender(null);
 
 		void ChangeRender(RenderComponent render) {
 			var isPresent = (render != null);
-			gameObject.SetActive(isPresent);
 			if ( !isPresent ) {
 				if ( string.IsNullOrEmpty(_currentType) ) {
 					return;
