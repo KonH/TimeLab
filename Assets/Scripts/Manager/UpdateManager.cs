@@ -20,7 +20,6 @@ namespace TimeLab.Manager {
 		}
 
 		public void Update(float deltaTime = 0) {
-			_world.Time.Current.Value += deltaTime;
 			_portalManager.Flush();
 			_signalProducer.Produce();
 			foreach ( var pair in _holder.LocationContainers ) {
@@ -32,6 +31,7 @@ namespace TimeLab.Manager {
 					updateSystem.Update(deltaTime);
 				}
 			}
+			_world.Time.Current.Value += deltaTime;
 		}
 	}
 }

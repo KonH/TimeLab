@@ -21,21 +21,20 @@ namespace TimeLab.Shared {
 		public SinglePermanentQueue(): this(new List<QueueElement<T>>()) {}
 
 		public void Enqueue(double timestamp, T content) {
-			ValidateTimestamp(timestamp);
+			ValidateTimestamp(timestamp, content);
 			_elements.Add(new QueueElement<T>(timestamp, content));
 		}
 
-		public void Insert(int position, T content) =>
-			_elements.Insert(position, new QueueElement<T>(0, content));
-
-		void ValidateTimestamp(double timestamp) {
+		void ValidateTimestamp(double timestamp, T content) {
 			if ( _elements.Count == 0 ) {
 				return;
 			}
-			var lastTimestamp = _elements[_elements.Count - 1].Timestamp;
+			var lastElement   = _elements[_elements.Count - 1];
+			var lastTimestamp = lastElement.Timestamp;
 			if ( lastTimestamp > timestamp ) {
 				throw new InvalidOperationException(
-					$"New content timestamp ({timestamp}) is less then last timestamp ({lastTimestamp})");
+					$"New content timestamp ({timestamp}) is less then last timestamp ({lastTimestamp}), " +
+					$"new content: {content}, last content: {lastElement.Content}");
 			}
 		}
 

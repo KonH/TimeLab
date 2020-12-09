@@ -12,9 +12,6 @@ namespace TimeLab.Manager {
 		public void Enqueue(double timestamp, T command) =>
 			_current.Enqueue(timestamp, command);
 
-		public void Insert(int position, T command) =>
-			_current.Insert(position, command);
-
 		public bool TryDequeue(double timestamp, out T content) =>
 			_history.TryDequeue(timestamp, out content) || _current.TryDequeue(timestamp, out content);
 
