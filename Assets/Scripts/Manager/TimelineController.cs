@@ -11,15 +11,17 @@ namespace TimeLab.Manager {
 		readonly Session        _session;
 		readonly IdGenerator    _idGenerator;
 		readonly WorldGenerator _worldGenerator;
+		readonly UpdateManager  _updateManager;
 
 		public TimelineController(
 			World world, CommandStorage commandStorage, Session session,
-			IdGenerator idGenerator, WorldGenerator worldGenerator) {
+			IdGenerator idGenerator, WorldGenerator worldGenerator, UpdateManager updateManager) {
 			_world          = world;
 			_commandStorage = commandStorage;
 			_session        = session;
 			_idGenerator    = idGenerator;
 			_worldGenerator = worldGenerator;
+			_updateManager  = updateManager;
 		}
 
 		public void Initialize() {
@@ -38,7 +40,11 @@ namespace TimeLab.Manager {
 			_world.Time.Current.Value = 0;
 			_commandStorage.Reset();
 			_worldGenerator.Generate();
-			AddCurrentPlayerForNewWorld(newTime);
+			var tickTime = 1 / 30.0f;
+			while ( _world.Time.Current.Value < newTime ) {
+				_updateManager.Update(tickTime);
+			}
+			AddCurrentPlayerForNewWorld(_world.Time.Current.Value);
 		}
 
 		void RemovePlayerByTimeOfTransition() {
