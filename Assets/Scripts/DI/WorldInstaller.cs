@@ -21,6 +21,9 @@ namespace TimeLab.DI {
 			Container.DeclareSignal<AddLocationCommand>();
 			Container.Bind<AddLocationSystem>().AsSingle().NonLazy();
 
+			Container.DeclareSignal<AddLocationComponentCommand>();
+			Container.Bind<AddLocationComponentSystem>().AsSingle().NonLazy();
+
 			Container.DeclareSignal<MovePlayerCommand>();
 			Container.Bind<MovePlayerSystem>().AsSingle().NonLazy();
 
