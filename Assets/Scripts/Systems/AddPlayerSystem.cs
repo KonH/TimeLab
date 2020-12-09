@@ -19,7 +19,7 @@ namespace TimeLab.Systems {
 					new PlayerComponent(cmd.Session)
 				};
 				foreach ( var component in components ) {
-					commands.Enqueue(time, new AddComponentCommand(cmd.Id, component));
+					commands.Enqueue(time, new AddEntityComponentCommand(cmd.Id, component));
 				}
 			});
 		}

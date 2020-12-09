@@ -26,8 +26,8 @@ namespace TimeLab.DI {
 			Container.DeclareSignal<AddEntityCommand>();
 			Container.Bind<AddEntitySystem>().AsSingle().NonLazy();
 
-			Container.DeclareSignal<AddComponentCommand>();
-			Container.Bind<AddComponentSystem>().AsSingle().NonLazy();
+			Container.DeclareSignal<AddEntityComponentCommand>();
+			Container.Bind<AddEntityComponentSystem>().AsSingle().NonLazy();
 
 			Container.DeclareSignal<MoveEntityCommand>();
 			Container.Bind<MoveEntitySystem>().AsSingle().NonLazy();

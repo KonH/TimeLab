@@ -24,18 +24,18 @@ namespace TimeLab.Manager {
 			firstLocationCommands.Insert(0, new AddEntityCommand(
 				firstDoorId,
 				new Vector2Int(0, -3)));
-			firstLocationCommands.Insert(1, new AddComponentCommand(
+			firstLocationCommands.Insert(1, new AddEntityComponentCommand(
 				firstDoorId, new PortalComponent(secondLocationId, new Vector2Int(0, 3))));
-			firstLocationCommands.Insert(2, new AddComponentCommand(
+			firstLocationCommands.Insert(2, new AddEntityComponentCommand(
 				firstDoorId, new RenderComponent("Door")));
 			var secondLocationCommands = _storage.GetLocationCommands(secondLocationId);
 			var secondDoorId           = _idGenerator.GetNextId();
 			secondLocationCommands.Insert(0, new AddEntityCommand(
 				secondDoorId,
 				new Vector2Int(0, 3)));
-			secondLocationCommands.Insert(1, new AddComponentCommand(
+			secondLocationCommands.Insert(1, new AddEntityComponentCommand(
 				secondDoorId, new PortalComponent(firstLocationId, new Vector2Int(0, -3))));
-			secondLocationCommands.Insert(2, new AddComponentCommand(
+			secondLocationCommands.Insert(2, new AddEntityComponentCommand(
 				secondDoorId, new RenderComponent("Door")));
 		}
 	}

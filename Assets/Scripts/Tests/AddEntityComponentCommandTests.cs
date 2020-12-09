@@ -9,12 +9,12 @@ using TimeLab.ViewModel;
 using UnityEngine;
 
 namespace TimeLab.Tests {
-	public sealed class AddComponentCommandTests : TimeLabLocationTestFixture {
+	public sealed class AddEntityComponentCommandTests : TimeLabLocationTestFixture {
 		[SetUp]
 		public override void Init() {
 			base.Init();
 			SubContainer.Resolve<AddEntitySystem>();
-			SubContainer.Resolve<AddComponentSystem>();
+			SubContainer.Resolve<AddEntityComponentSystem>();
 		}
 
 		[Test]
@@ -25,7 +25,7 @@ namespace TimeLab.Tests {
 			var id       = 2ul;
 
 			recorder.Record(new AddEntityCommand(id, Vector2Int.zero));
-			recorder.Record(new AddComponentCommand(id, new RenderComponent(string.Empty)));
+			recorder.Record(new AddEntityComponentCommand(id, new RenderComponent(string.Empty)));
 			updater.Update();
 
 			location.Entities.First().Components.Should().Contain(c => c is RenderComponent);

@@ -26,7 +26,7 @@ namespace TimeLab.Tests {
 				var subContainer = Container.CreateSubContainer();
 				subContainer.Install<LocationInstaller>(new object[] { location, holder });
 				subContainer.Resolve<AddEntitySystem>();
-				subContainer.Resolve<AddComponentSystem>();
+				subContainer.Resolve<AddEntityComponentSystem>();
 			}
 			updater.Update();
 		}

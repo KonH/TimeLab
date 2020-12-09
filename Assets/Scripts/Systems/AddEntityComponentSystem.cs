@@ -4,9 +4,9 @@ using TimeLab.ViewModel;
 using Zenject;
 
 namespace TimeLab.Systems {
-	public sealed class AddComponentSystem {
-		public AddComponentSystem(Location location, SignalBus bus) {
-			bus.Subscribe<AddComponentCommand>(cmd => {
+	public sealed class AddEntityComponentSystem {
+		public AddEntityComponentSystem(Location location, SignalBus bus) {
+			bus.Subscribe<AddEntityComponentCommand>(cmd => {
 				var entity = location.Entities.First(e => e.Id == cmd.Entity);
 				entity.Components.Add(cmd.Component);
 			});
