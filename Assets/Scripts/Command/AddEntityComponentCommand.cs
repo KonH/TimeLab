@@ -9,5 +9,9 @@ namespace TimeLab.Command {
 			Entity    = entity;
 			Component = component;
 		}
+
+		public override string ToString() {
+			return $"[{nameof(AddEntityComponentCommand)}] {nameof(Entity)}: {Entity}, {nameof(Component)}: {Component}";
+		}
 	}
 }

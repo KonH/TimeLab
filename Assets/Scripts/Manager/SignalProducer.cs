@@ -20,8 +20,12 @@ namespace TimeLab.Manager {
 		public void Produce() {
 			var timestamp = _world.Time.Current.Value;
 			while ( _queue.TryDequeue(timestamp, out var command) ) {
-				_bus.TryFire((object)command);
+				Fire(command);
 			}
+		}
+
+		protected virtual void Fire(T command) {
+			_bus.TryFire((object)command);
 		}
 	}
 }

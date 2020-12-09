@@ -2,6 +2,7 @@ using System.Linq;
 using TimeLab.Command;
 using TimeLab.Component;
 using TimeLab.ViewModel;
+using UnityEngine;
 using Zenject;
 
 namespace TimeLab.Systems {
@@ -21,6 +22,7 @@ namespace TimeLab.Systems {
 				sourceEntity.Position.Value = newPosition;
 				var locationId  = targetPortal.TargetLocation;
 				location.Portal.Enqueue(locationId, sourceEntity);
+				Debug.Log($"{nameof(TransferSystem)}: entity {targetEntity.Id} moved from {location.Id} to {locationId}");
 			});
 		}
 	}

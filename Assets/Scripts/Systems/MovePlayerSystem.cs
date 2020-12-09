@@ -3,6 +3,7 @@ using TimeLab.Command;
 using TimeLab.Component;
 using TimeLab.Manager;
 using TimeLab.ViewModel;
+using UnityEngine;
 using Zenject;
 
 namespace TimeLab.Systems {
@@ -17,6 +18,7 @@ namespace TimeLab.Systems {
 					foreach ( var player in players ) {
 						var recorder = holder.Resolve<LocationCommandRecorder>(location.Id);
 						recorder.Record(new MoveEntityCommand(player.Id, player.Position.Value + cmd.Direction));
+						Debug.Log($"{nameof(MovePlayerSystem)}: player {player.Id} for session {cmd.Session} will move by {cmd.Direction}");
 					}
 				}
 			});

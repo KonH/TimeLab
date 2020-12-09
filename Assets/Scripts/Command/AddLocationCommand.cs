@@ -9,5 +9,9 @@ namespace TimeLab.Command {
 			Id     = id;
 			Bounds = bounds;
 		}
+
+		public override string ToString() {
+			return $"[{nameof(AddLocationCommand)}] {nameof(Id)}: {Id}, {nameof(Bounds)}: {Bounds}";
+		}
 	}
 }

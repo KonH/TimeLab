@@ -7,5 +7,9 @@ namespace TimeLab.Command {
 			Source = source;
 			Target = target;
 		}
+
+		public override string ToString() {
+			return $"[{nameof(CollisionCommand)}] {nameof(Source)}: {Source}, {nameof(Target)}: {Target}";
+		}
 	}
 }

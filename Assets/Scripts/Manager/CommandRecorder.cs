@@ -10,13 +10,17 @@ namespace TimeLab.Manager {
 		readonly World                    _world;
 		readonly PermanentCommandQueue<T> _queue;
 
-		public CommandRecorder(World world, PermanentCommandQueue<T> queue) {
+		protected CommandRecorder(World world, PermanentCommandQueue<T> queue) {
 			_world = world;
 			_queue = queue;
 		}
 
 		public void Record(T command) {
 			var timestamp = _world.Time.Current.Value;
+			Enqueue(timestamp, command);
+		}
+
+		protected virtual void Enqueue(double timestamp, T command) {
 			_queue.Enqueue(timestamp, command);
 		}
 	}

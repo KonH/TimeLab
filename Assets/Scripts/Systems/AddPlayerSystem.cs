@@ -21,6 +21,7 @@ namespace TimeLab.Systems {
 				foreach ( var component in components ) {
 					commands.Enqueue(time, new AddEntityComponentCommand(cmd.Id, component));
 				}
+				Debug.Log($"{nameof(AddPlayerSystem)}: player for session {cmd.Session} will be added as {cmd.Id}");
 			});
 		}
 	}

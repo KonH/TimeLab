@@ -6,5 +6,9 @@ namespace TimeLab.Command {
 		public RemovePlayerCommand(ulong session) {
 			Session = session;
 		}
+
+		public override string ToString() {
+			return $"[{nameof(RemovePlayerCommand)}] {nameof(Session)}: {Session}";
+		}
 	}
 }

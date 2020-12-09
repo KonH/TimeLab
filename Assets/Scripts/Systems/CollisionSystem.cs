@@ -2,6 +2,7 @@ using System.Linq;
 using TimeLab.Command;
 using TimeLab.Manager;
 using TimeLab.ViewModel;
+using UnityEngine;
 using Zenject;
 
 namespace TimeLab.Systems {
@@ -15,6 +16,7 @@ namespace TimeLab.Systems {
 					.Where(e => (e.Id != sourceId) && (e.Position.Value == targetPosition));
 				foreach ( var targetEntity in targetEntities ) {
 					recorder.Record(new CollisionCommand(sourceEntity.Id, targetEntity.Id));
+					Debug.Log($"{nameof(CollisionSystem)}: collision between {sourceEntity.Id} and {targetEntity.Id} detected");
 				}
 			});
 		}

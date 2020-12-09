@@ -9,5 +9,9 @@ namespace TimeLab.Command {
 			Id       = id;
 			Position = position;
 		}
+
+		public override string ToString() {
+			return $"[{nameof(AddEntityCommand)}] {nameof(Id)}: {Id}, {nameof(Position)}: {Position}";
+		}
 	}
 }

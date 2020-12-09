@@ -5,5 +5,9 @@ namespace TimeLab.Command {
 		public RemoveEntityCommand(ulong id) {
 			Id = id;
 		}
+
+		public override string ToString() {
+			return $"[{nameof(RemoveEntityCommand)}] {nameof(Id)}: {Id}";
+		}
 	}
 }

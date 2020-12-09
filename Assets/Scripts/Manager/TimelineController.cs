@@ -1,5 +1,6 @@
 using TimeLab.Command;
 using TimeLab.ViewModel;
+using UnityEngine;
 
 namespace TimeLab.Manager {
 	/// <summary>
@@ -37,6 +38,7 @@ namespace TimeLab.Manager {
 			RemovePlayerByTimeOfTransition();
 			var newTime = _world.Time.Current.Value + offset;
 			newTime = newTime > double.Epsilon ? newTime : double.Epsilon;
+			Debug.Log($"{nameof(TimelineController)}.{nameof(Travel)}: travel to {newTime}");
 			_world.Time.Current.Value = 0;
 			_commandStorage.Reset();
 			_worldGenerator.Generate();

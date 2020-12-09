@@ -10,5 +10,9 @@ namespace TimeLab.Command {
 			Session   = session;
 			Direction = direction;
 		}
+
+		public override string ToString() {
+			return $"[{nameof(MovePlayerCommand)}] {nameof(Session)}: {Session}, {nameof(Direction)}: {Direction}";
+		}
 	}
 }

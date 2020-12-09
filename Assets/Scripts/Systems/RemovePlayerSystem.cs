@@ -3,6 +3,7 @@ using TimeLab.Command;
 using TimeLab.Component;
 using TimeLab.Manager;
 using TimeLab.ViewModel;
+using UnityEngine;
 using Zenject;
 
 namespace TimeLab.Systems {
@@ -16,6 +17,7 @@ namespace TimeLab.Systems {
 					foreach ( var player in players ) {
 						var time = world.Time.Current.Value;
 						storage.GetLocationCommands(location.Id).Enqueue(time, new RemoveEntityCommand(player.Id));
+						Debug.Log($"{nameof(RemovePlayerCommand)}: player {player.Id} for session {cmd.Session} will be removed");
 					}
 				}
 			});

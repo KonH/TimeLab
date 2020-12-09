@@ -9,5 +9,9 @@ namespace TimeLab.Command {
 			Location  = location;
 			Component = component;
 		}
+
+		public override string ToString() {
+			return $"[{nameof(AddLocationComponentCommand)}] {nameof(Location)}: {Location}, {nameof(Component)}: {Component}";
+		}
 	}
 }
