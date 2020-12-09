@@ -13,7 +13,6 @@ namespace TimeLab.Tests {
 
 		[Test]
 		public void IsCreatedWithoutErrors() {
-			Container.Resolve<AddLocationSystem>();
 			var world     = Container.Resolve<World>();
 			var holder    = Container.Resolve<LocationContainerHolder>();
 			var generator = Container.Resolve<WorldGenerator>();
@@ -25,8 +24,6 @@ namespace TimeLab.Tests {
 			foreach ( var location in world.Locations ) {
 				var subContainer = Container.CreateSubContainer();
 				subContainer.Install<LocationInstaller>(new object[] { location, holder });
-				subContainer.Resolve<AddEntitySystem>();
-				subContainer.Resolve<AddEntityComponentSystem>();
 			}
 			updater.Update();
 		}

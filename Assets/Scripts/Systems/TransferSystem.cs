@@ -5,7 +5,7 @@ using TimeLab.ViewModel;
 using Zenject;
 
 namespace TimeLab.Systems {
-	public sealed class TransferSystem {
+	public sealed class TransferSystem : ILocationSystem {
 		public TransferSystem(Location location, SignalBus bus) {
 			bus.Subscribe<CollisionCommand>(cmd => {
 				var targetEntity = location.Entities.First(e => e.Id == cmd.Target);

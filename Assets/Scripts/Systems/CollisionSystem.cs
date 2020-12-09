@@ -5,7 +5,7 @@ using TimeLab.ViewModel;
 using Zenject;
 
 namespace TimeLab.Systems {
-	public sealed class CollisionSystem {
+	public sealed class CollisionSystem : ILocationSystem {
 		public CollisionSystem(Location location, SignalBus bus, LocationCommandRecorder recorder) {
 			bus.Subscribe<MoveEntityCommand>(cmd => {
 				var sourceId       = cmd.Id;

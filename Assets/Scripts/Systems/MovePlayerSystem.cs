@@ -6,7 +6,7 @@ using TimeLab.ViewModel;
 using Zenject;
 
 namespace TimeLab.Systems {
-	public sealed class MovePlayerSystem {
+	public sealed class MovePlayerSystem : IWorldSystem {
 		public MovePlayerSystem(World world, SignalBus bus, LocationContainerHolder holder) {
 			bus.Subscribe<MovePlayerCommand>(cmd => {
 				foreach ( var location in world.Locations ) {

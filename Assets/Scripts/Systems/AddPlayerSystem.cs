@@ -7,7 +7,7 @@ using UnityEngine;
 using Zenject;
 
 namespace TimeLab.Systems {
-	public sealed class AddPlayerSystem {
+	public sealed class AddPlayerSystem : IWorldSystem {
 		public AddPlayerSystem(World world, SignalBus bus, CommandStorage storage) {
 			bus.Subscribe<AddPlayerCommand>(cmd => {
 				var locationId = world.Locations.First().Id;

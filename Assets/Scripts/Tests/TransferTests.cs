@@ -20,8 +20,6 @@ namespace TimeLab.Tests {
 		public override void Init() {
 			base.Init();
 			_recorder = SubContainer.Resolve<LocationCommandRecorder>();
-			SubContainer.Resolve<AddEntitySystem>();
-			SubContainer.Resolve<AddEntityComponentSystem>();
 			_recorder.Record(new AddEntityCommand(EntityId, Vector2Int.zero));
 			var secondSubContainer = CreateLocation(SecondLocationId);
 			secondSubContainer.Resolve<AddEntitySystem>();
@@ -42,9 +40,6 @@ namespace TimeLab.Tests {
 
 		[Test]
 		public void IsCollisionWithPortalComponentLeadsToTransfer() {
-			SubContainer.Resolve<MoveEntitySystem>();
-			SubContainer.Resolve<CollisionSystem>();
-			SubContainer.Resolve<TransferSystem>();
 			_recorder.Record(new MoveEntityCommand(2, Vector2Int.one));
 			_updater.Update();
 

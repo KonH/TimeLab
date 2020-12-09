@@ -13,8 +13,6 @@ namespace TimeLab.Tests {
 		[SetUp]
 		public override void Init() {
 			base.Init();
-			SubContainer.Resolve<AddEntitySystem>();
-			SubContainer.Resolve<AddEntityComponentSystem>();
 		}
 
 		[Test]

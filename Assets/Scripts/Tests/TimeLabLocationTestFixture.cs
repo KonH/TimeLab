@@ -19,7 +19,6 @@ namespace TimeLab.Tests {
 		}
 
 		protected DiContainer CreateLocation(ulong id = 1ul) {
-			Container.Resolve<AddLocationSystem>();
 			var recorder = Container.Resolve<WorldCommandRecorder>();
 			var updater  = Container.Resolve<UpdateManager>();
 			var bounds   = new Rect2DInt(1, 2, 3, 4);
@@ -31,6 +30,7 @@ namespace TimeLab.Tests {
 			var world  = Container.Resolve<World>();
 			var holder = Container.Resolve<LocationContainerHolder>();
 			subContainer.Install<LocationInstaller>(new object[] { world.Locations.First(l => l.Id == id), holder });
+			subContainer.ResolveSystems<ILocationSystem>();
 			return subContainer;
 		}
 	}
