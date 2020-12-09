@@ -10,26 +10,31 @@ namespace TimeLab.Manager {
 		readonly World          _world;
 		readonly CommandStorage _commandStorage;
 		readonly Session        _session;
-		readonly IdGenerator    _idGenerator;
 		readonly WorldGenerator _worldGenerator;
 		readonly UpdateManager  _updateManager;
 
 		public TimelineController(
 			World world, CommandStorage commandStorage, Session session,
-			IdGenerator idGenerator, WorldGenerator worldGenerator, UpdateManager updateManager) {
+			WorldGenerator worldGenerator, UpdateManager updateManager) {
 			_world          = world;
 			_commandStorage = commandStorage;
 			_session        = session;
-			_idGenerator    = idGenerator;
 			_worldGenerator = worldGenerator;
 			_updateManager  = updateManager;
 		}
 
 		public void Initialize() {
+			_worldGenerator.Generate();
 			if ( !_session.IsFirstRun ) {
+				var newTime  = _session.NewTime;
+				Debug.Log($"{nameof(TimelineController)}.{nameof(Initialize)}: time-skipping to {newTime}");
+				var tickTime = 1 / 30.0f;
+				while ( _world.Time.Current.Value < newTime ) {
+					_updateManager.Update(tickTime);
+				}
+				AddCurrentPlayerForNewWorld(_world.Time.Current.Value);
 				return;
 			}
-			_worldGenerator.Generate();
 			AddPlayer(double.Epsilon);
 			_session.IsFirstRun = false;
 		}
@@ -39,14 +44,8 @@ namespace TimeLab.Manager {
 			var newTime = _world.Time.Current.Value + offset;
 			newTime = newTime > double.Epsilon ? newTime : double.Epsilon;
 			Debug.Log($"{nameof(TimelineController)}.{nameof(Travel)}: travel to {newTime}");
-			_world.Time.Current.Value = 0;
 			_commandStorage.Reset();
-			_worldGenerator.Generate();
-			var tickTime = 1 / 30.0f;
-			while ( _world.Time.Current.Value < newTime ) {
-				_updateManager.Update(tickTime);
-			}
-			AddCurrentPlayerForNewWorld(_world.Time.Current.Value);
+			_session.NewTime = newTime;
 		}
 
 		void RemovePlayerByTimeOfTransition() {
@@ -61,8 +60,7 @@ namespace TimeLab.Manager {
 
 		void AddPlayer(double time) {
 			var commands = _commandStorage.GetWorldCommands();
-			commands.Enqueue(time, new AddPlayerCommand(
-				_idGenerator.GetNextId(), _session.Id));
+			commands.Enqueue(time, new AddPlayerCommand(_session.Id));
 		}
 	}
 }
