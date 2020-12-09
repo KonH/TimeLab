@@ -24,6 +24,7 @@ namespace TimeLab.Tests {
 			foreach ( var location in world.Locations ) {
 				var subContainer = Container.CreateSubContainer();
 				subContainer.Install<LocationInstaller>(new object[] { location, holder });
+				subContainer.ResolveSystems<ILocationSystem>();
 			}
 			updater.Update();
 		}
