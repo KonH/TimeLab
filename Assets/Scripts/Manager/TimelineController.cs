@@ -7,24 +7,26 @@ namespace TimeLab.Manager {
 	/// Operates with current game timeline
 	/// </summary>
 	public sealed class TimelineController {
-		readonly World          _world;
-		readonly CommandStorage _commandStorage;
-		readonly Session        _session;
-		readonly WorldGenerator _worldGenerator;
-		readonly UpdateManager  _updateManager;
+		readonly Session              _session;
+		readonly World                _world;
+		readonly CommandStorage       _commandStorage;
+		readonly WorldCommandRecorder _worldRecorder;
+		readonly WorldGenerator       _worldGenerator;
+		readonly UpdateManager        _updateManager;
 
 		public TimelineController(
-			World world, CommandStorage commandStorage, Session session,
+			Session session, World world, CommandStorage commandStorage, WorldCommandRecorder worldRecorder,
 			WorldGenerator worldGenerator, UpdateManager updateManager) {
-			_world          = world;
-			_commandStorage = commandStorage;
 			_session        = session;
+			_world          = world;
+			_worldRecorder  = worldRecorder;
+			_commandStorage = commandStorage;
 			_worldGenerator = worldGenerator;
 			_updateManager  = updateManager;
 		}
 
 		public void Initialize() {
-			_worldGenerator.Generate();
+			ApplyGeneration();
 			if ( !_session.IsFirstRun ) {
 				var newTime  = _session.NewTime;
 				Debug.Log($"{nameof(TimelineController)}.{nameof(Initialize)}: time-skipping to {newTime}");
@@ -32,10 +34,10 @@ namespace TimeLab.Manager {
 				while ( _world.Time.Current.Value < newTime ) {
 					_updateManager.Update(tickTime);
 				}
-				AddCurrentPlayerForNewWorld(_world.Time.Current.Value);
+				AddCurrentPlayerForNewWorld();
 				return;
 			}
-			AddPlayer(double.Epsilon);
+			AddPlayer();
 			_session.IsFirstRun = false;
 		}
 
@@ -44,7 +46,6 @@ namespace TimeLab.Manager {
 			var newTime = _world.Time.Current.Value + offset;
 			newTime = newTime > double.Epsilon ? newTime : double.Epsilon;
 			Debug.Log($"{nameof(TimelineController)}.{nameof(Travel)}: travel to {newTime}");
-			_commandStorage.Reset();
 			_session.NewTime = newTime;
 		}
 
@@ -53,14 +54,18 @@ namespace TimeLab.Manager {
 				_world.Time.Current.Value, new RemovePlayerCommand(_session.Id));
 		}
 
-		void AddCurrentPlayerForNewWorld(double newTime) {
-			_session.Id++;
-			AddPlayer(newTime);
+		void ApplyGeneration() {
+			var generationCommands = _worldGenerator.Generate();
+			_commandStorage.Reset(generationCommands);
 		}
 
-		void AddPlayer(double time) {
-			var commands = _commandStorage.GetWorldCommands();
-			commands.Enqueue(time, new AddPlayerCommand(_session.Id));
+		void AddCurrentPlayerForNewWorld() {
+			_session.Id++;
+			AddPlayer();
+		}
+
+		void AddPlayer() {
+			_worldRecorder.Record(new AddPlayerCommand(_session.Id));
 		}
 	}
 }

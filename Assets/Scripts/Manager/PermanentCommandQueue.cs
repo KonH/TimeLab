@@ -6,6 +6,7 @@ using TimeLab.Shared;
 
 namespace TimeLab.Manager {
 	public sealed class PermanentCommandQueue<T> where T : class, ICommand {
+		SinglePermanentQueue<T> _basis  = new SinglePermanentQueue<T>();
 		SinglePermanentQueue<T> _history = new SinglePermanentQueue<T>();
 		SinglePermanentQueue<T> _current = new SinglePermanentQueue<T>();
 
@@ -13,12 +14,15 @@ namespace TimeLab.Manager {
 			_current.Enqueue(timestamp, command);
 
 		public bool TryDequeue(double timestamp, out T content) =>
-			_history.TryDequeue(timestamp, out content) || _current.TryDequeue(timestamp, out content);
+			_basis.TryDequeue(timestamp, out content) ||
+			_history.TryDequeue(timestamp, out content) ||
+			_current.TryDequeue(timestamp, out content);
 
 		/// <summary>
 		/// Allow to replay commands
 		/// </summary>
-		public void Reset() {
+		public void Reset(PermanentCommandQueue<T> basis) {
+			_basis   = new SinglePermanentQueue<T>(basis._current.Elements.ToList());
 			_history = Merge(_history, _current);
 			_current = new SinglePermanentQueue<T>();
 		}

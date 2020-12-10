@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using TimeLab.Command;
 
 namespace TimeLab.Manager {
@@ -24,10 +25,14 @@ namespace TimeLab.Manager {
 		/// <summary>
 		/// Allow to replay commands
 		/// </summary>
-		public void Reset() {
-			_worldCommands.Reset();
-			foreach ( var locationCommands in _locationCommands.Values ) {
-				locationCommands.Reset();
+		public void Reset(CommandStorage basis) {
+			_worldCommands.Reset(basis.GetWorldCommands());
+			var allLocations = basis._locationCommands.Keys
+				.Concat(_locationCommands.Keys)
+				.Distinct();
+			foreach ( var location in allLocations ) {
+				var locationCommands = GetLocationCommands(location);
+				locationCommands.Reset(basis.GetLocationCommands(location));
 			}
 		}
 

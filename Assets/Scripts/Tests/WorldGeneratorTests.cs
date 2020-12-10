@@ -13,12 +13,15 @@ namespace TimeLab.Tests {
 
 		[Test]
 		public void IsCreatedWithoutErrors() {
-			var world     = Container.Resolve<World>();
-			var holder    = Container.Resolve<LocationContainerHolder>();
-			var generator = Container.Resolve<WorldGenerator>();
-			var updater   = Container.Resolve<UpdateManager>();
+			var idGenerator = new IdGenerator();
+			var generator   = new WorldGenerator(idGenerator);
+			var storage     = generator.Generate();
+			Container.Resolve<CommandStorage>().Reset(storage);
 
-			generator.Generate();
+			var world   = Container.Resolve<World>();
+			var holder  = Container.Resolve<LocationContainerHolder>();
+			var updater = Container.Resolve<UpdateManager>();
+
 			updater.Update();
 
 			foreach ( var location in world.Locations ) {
