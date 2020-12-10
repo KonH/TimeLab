@@ -1,6 +1,5 @@
 using TimeLab.Manager;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Zenject;
 
 namespace TimeLab.View {
@@ -14,18 +13,6 @@ namespace TimeLab.View {
 
 		void Start() {
 			_timelineController.Initialize();
-		}
-
-		[ContextMenu(nameof(TravelBackward))]
-		public void TravelBackward() {
-			_timelineController.Travel(-10);
-			SceneManager.LoadScene(0);
-		}
-
-		[ContextMenu(nameof(TravelForward))]
-		public void TravelForward() {
-			_timelineController.Travel(10);
-			SceneManager.LoadScene(0);
 		}
 	}
 }
