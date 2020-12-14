@@ -21,6 +21,8 @@ namespace TimeLab.DI {
 			Container.Bind<LocationCommandRecorder>().AsSingle();
 			Container.Bind<LocationSignalProducer>().AsSingle().NonLazy();
 
+			Container.Bind<ILocationUpdater>().To<CharacterNeedIncreaseSystem>().AsSingle().NonLazy();
+
 			Container.DeclareSignal<AddEntityCommand>();
 			Container.Bind<AddEntitySystem>().AsSingle().NonLazy();
 
@@ -37,6 +39,7 @@ namespace TimeLab.DI {
 			Container.Bind<CollisionSystem>().AsSingle().NonLazy();
 			Container.Bind<TransferSystem>().AsSingle().NonLazy();
 
+			Container.Bind<EntityRefillSystem>().AsSingle().NonLazy();
 		}
 	}
 }
