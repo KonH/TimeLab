@@ -17,7 +17,8 @@ namespace TimeLab.Systems {
 				commands.Enqueue(time, new AddEntityCommand(id, Vector2Int.zero));
 				var components = new IComponent[] {
 					new RenderComponent("Player"),
-					new PlayerComponent(cmd.Session)
+					new PlayerComponent(cmd.Session),
+					new CharacterNeed("Hunger", 0),
 				};
 				foreach ( var component in components ) {
 					commands.Enqueue(time, new AddEntityComponentCommand(id, component));

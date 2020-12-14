@@ -20,3 +20,5 @@ MonoBehaviour:
       Prefab: {fileID: 7917699693887506823, guid: f5df5687b24104b6f837be2c2df5dac9, type: 3}
     - Type: Bot
       Prefab: {fileID: 7917699693887506823, guid: 3617ad13b3e6341e4abaaeb425aa595f, type: 3}
+    - Type: Fridge
+      Prefab: {fileID: 7917699693887506823, guid: d06964d3e67834e1d8df23787ec091dd, type: 3}

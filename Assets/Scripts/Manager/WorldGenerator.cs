@@ -28,6 +28,13 @@ namespace TimeLab.Manager {
 				firstDoorId, new PortalComponent(secondLocationId, new Vector2Int(0, 3))));
 			firstLocationCommands.Enqueue(time, new AddEntityComponentCommand(
 				firstDoorId, new RenderComponent("Door")));
+			var fridgeId = _idGenerator.GetNextId();
+			firstLocationCommands.Enqueue(time, new AddEntityCommand(
+				fridgeId, new Vector2Int(-3, 3)));
+			firstLocationCommands.Enqueue(time, new AddEntityComponentCommand(
+				fridgeId, new RefillSource("Hunger", 10, 5)));
+			firstLocationCommands.Enqueue(time, new AddEntityComponentCommand(
+				fridgeId, new RenderComponent("Fridge")));
 			var secondLocationCommands = storage.GetLocationCommands(secondLocationId);
 			var secondDoorId           = _idGenerator.GetNextId();
 			secondLocationCommands.Enqueue(time, new AddEntityCommand(
