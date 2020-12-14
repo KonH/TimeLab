@@ -8,5 +8,9 @@ namespace TimeLab.Component {
 			Type   = type;
 			Amount = amount;
 		}
+
+		public override string ToString() {
+			return $"[{nameof(CharacterNeed)}] {nameof(Type)}: {Type}, {nameof(Amount)}: {Amount}";
+		}
 	}
 }

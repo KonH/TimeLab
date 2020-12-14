@@ -5,5 +5,9 @@ namespace TimeLab.Component {
 		public RenderComponent(string type) {
 			Type = type;
 		}
+
+		public override string ToString() {
+			return $"[{nameof(RenderComponent)}] {nameof(Type)}: {Type}";
+		}
 	}
 }

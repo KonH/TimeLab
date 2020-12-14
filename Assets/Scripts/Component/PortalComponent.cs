@@ -9,5 +9,9 @@ namespace TimeLab.Component {
 			TargetLocation = targetLocation;
 			TargetPosition = targetPosition;
 		}
+
+		public override string ToString() {
+			return $"[{nameof(PortalComponent)}] {nameof(TargetLocation)}: {TargetLocation}, {nameof(TargetPosition)}: {TargetPosition}";
+		}
 	}
 }

@@ -10,5 +10,9 @@ namespace TimeLab.Component {
 			Decrease = decrease;
 			Amount   = amount;
 		}
+
+		public override string ToString() {
+			return $"[{nameof(RefillSource)}] {nameof(Type)}: {Type}, {nameof(Decrease)}: {Decrease}, {nameof(Amount)}: {Amount}";
+		}
 	}
 }
