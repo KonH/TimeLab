@@ -1,7 +1,7 @@
 using TimeLab.Component;
 
 namespace TimeLab.Command {
-	public sealed class AddLocationComponentCommand : ILocationCommand {
+	public sealed class AddLocationComponentCommand : IWorldCommand {
 		public readonly ulong      Location;
 		public readonly IComponent Component;
 

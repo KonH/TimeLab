@@ -8,12 +8,10 @@ namespace TimeLab.Systems {
 	public sealed class CharacterNeedIncreaseSystem : ILocationUpdater {
 		readonly Timer _timer = new Timer(1);
 
-		readonly Location                _location;
-		readonly LocationCommandRecorder _recorder;
+		readonly Location _location;
 
-		public CharacterNeedIncreaseSystem(Location location, LocationCommandRecorder recorder) {
+		public CharacterNeedIncreaseSystem(Location location) {
 			_location = location;
-			_recorder = recorder;
 		}
 
 		public void Update(float deltaTime) {
