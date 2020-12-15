@@ -19,6 +19,7 @@ namespace TimeLab.Systems {
 					new RenderComponent("Player"),
 					new PlayerComponent(cmd.Session),
 					new CharacterNeed("Hunger", 0),
+					new CharacterNeed("Stress", 0),
 				};
 				foreach ( var component in components ) {
 					commands.Enqueue(time, new AddEntityComponentCommand(id, component));

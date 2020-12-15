@@ -44,6 +44,7 @@ namespace TimeLab.Manager {
 				secondDoorId, new PortalComponent(firstLocationId, new Vector2Int(0, -3))));
 			secondLocationCommands.Enqueue(time, new AddEntityComponentCommand(
 				secondDoorId, new RenderComponent("Door")));
+			worldCommands.Enqueue(time, new AddLocationComponentCommand(secondLocationId, new RefillArea("Stress", 1)));
 			return storage;
 		}
 	}
