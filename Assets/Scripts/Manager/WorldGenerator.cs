@@ -12,28 +12,46 @@ namespace TimeLab.Manager {
 		}
 
 		public CommandStorage Generate() {
-			var time             = double.MinValue;
-			var storage          = new CommandStorage();
-			var playerLocationId  = _idGenerator.GetNextId();
+			var time    = double.MinValue;
+			var storage = new CommandStorage();
+
+			var playerLocationId = _idGenerator.GetNextId();
+			AddHomeLocation(time, playerLocationId, storage, new Vector2Int(0, 1));
+			var botLocationId = _idGenerator.GetNextId();
+			AddHomeLocation(time, botLocationId, storage, new Vector2Int(-12, 1));
+			AddBot(time, botLocationId, storage);
 			var streetLocationId = _idGenerator.GetNextId();
-			AddPlayerLocation(time, playerLocationId, storage);
 			AddStreetLocation(time, streetLocationId, storage);
 			ConnectLocations(
-				time, storage, playerLocationId, streetLocationId, new Vector2Int(0, -3), new Vector2Int(0, 3));
+				time, storage, playerLocationId, streetLocationId, new Vector2Int(0, -3), new Vector2Int(6, 3));
+			ConnectLocations(
+				time, storage, botLocationId, streetLocationId, new Vector2Int(0, -3), new Vector2Int(-6, 3));
+
 			return storage;
 		}
 
-		void AddPlayerLocation(double time, ulong locationId, CommandStorage storage) {
-			var worldCommands   = storage.GetWorldCommands();
-			worldCommands.Enqueue(time, new AddLocationCommand(locationId, new Rect2DInt(0, 1, 10, 6)));
+		void AddHomeLocation(double time, ulong locationId, CommandStorage storage, Vector2Int position) {
+			var worldCommands = storage.GetWorldCommands();
+			worldCommands.Enqueue(
+				time, new AddLocationCommand(locationId, new Rect2DInt(position.x, position.y, 10, 6)));
 
 			var locationCommands = storage.GetLocationCommands(locationId);
 			AddFridge(time, locationCommands);
 		}
 
+		void AddBot(double time, ulong locationId, CommandStorage storage) {
+			var locationCommands = storage.GetLocationCommands(locationId);
+
+			var id = _idGenerator.GetNextId();
+			locationCommands.Enqueue(time, new AddEntityCommand(id, Vector2Int.zero));
+			locationCommands.Enqueue(time, new AddEntityComponentCommand(id, new RenderComponent("Bot")));
+			locationCommands.Enqueue(time, new AddEntityComponentCommand(id, new CharacterNeed("Hunger", 0)));
+			locationCommands.Enqueue(time, new AddEntityComponentCommand(id, new CharacterNeed("Stress", 0)));
+		}
+
 		void AddStreetLocation(double time, ulong streetId, CommandStorage storage) {
 			var worldCommands = storage.GetWorldCommands();
-			worldCommands.Enqueue(time, new AddLocationCommand(streetId, new Rect2DInt(0, -8, 10, 6)));
+			worldCommands.Enqueue(time, new AddLocationCommand(streetId, new Rect2DInt(-16, -7, 30, 6)));
 			worldCommands.Enqueue(time, new AddLocationComponentCommand(streetId, new RefillArea("Stress", 1)));
 		}
 
