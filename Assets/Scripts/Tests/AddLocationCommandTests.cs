@@ -4,7 +4,6 @@ using NUnit.Framework;
 using TimeLab.Command;
 using TimeLab.Manager;
 using TimeLab.Shared;
-using TimeLab.Systems;
 using TimeLab.ViewModel;
 
 namespace TimeLab.Tests {
