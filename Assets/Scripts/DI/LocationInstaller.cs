@@ -23,7 +23,8 @@ namespace TimeLab.DI {
 
 			Container.Bind<ILocationUpdater>().To(
 				typeof(CharacterNeedIncreaseSystem),
-				typeof(LocationRefillSystem)
+				typeof(LocationRefillSystem),
+				typeof(IntentionGeneratorSystem)
 				).AsSingle().NonLazy();
 
 			Container.DeclareSignal<AddEntityCommand>();
@@ -43,6 +44,8 @@ namespace TimeLab.DI {
 			Container.Bind<TransferSystem>().AsSingle().NonLazy();
 
 			Container.Bind<EntityRefillSystem>().AsSingle().NonLazy();
+
+			Container.DeclareSignal<ChangeIntentionCommand>();
 		}
 	}
 }
