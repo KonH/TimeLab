@@ -47,6 +47,7 @@ namespace TimeLab.Manager {
 			locationCommands.Enqueue(time, new AddEntityComponentCommand(id, new RenderComponent("Bot")));
 			locationCommands.Enqueue(time, new AddEntityComponentCommand(id, new CharacterNeed("Hunger", 0)));
 			locationCommands.Enqueue(time, new AddEntityComponentCommand(id, new CharacterNeed("Stress", 0)));
+			locationCommands.Enqueue(time, new AddEntityComponentCommand(id, new AIComponent()));
 		}
 
 		void AddStreetLocation(double time, ulong streetId, CommandStorage storage) {

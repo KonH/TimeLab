@@ -46,6 +46,7 @@ namespace TimeLab.DI {
 			Container.Bind<EntityRefillSystem>().AsSingle().NonLazy();
 
 			Container.DeclareSignal<ChangeIntentionCommand>();
+			Container.Bind<AIMovementSystem>().AsSingle().NonLazy();
 		}
 	}
 }
