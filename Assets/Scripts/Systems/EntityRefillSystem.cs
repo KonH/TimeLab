@@ -9,8 +9,11 @@ namespace TimeLab.Systems {
 	public sealed class EntityRefillSystem : ILocationSystem {
 		public EntityRefillSystem(Location location, SignalBus bus) {
 			bus.Subscribe<CollisionCommand>(cmd => {
-				var source  = location.Entities.First(e => e.Id == cmd.Source);
-				var target  = location.Entities.First(e => e.Id == cmd.Target);
+				var source  = location.Entities.FirstOrDefault(e => e.Id == cmd.Source);
+				var target  = location.Entities.FirstOrDefault(e => e.Id == cmd.Target);
+				if ( (source == null) || (target == null) ) {
+					return;
+				}
 				var needs   = source.Components.OfType<CharacterNeed>();
 				foreach ( var need in needs ) {
 					var refillSource = target.Components
