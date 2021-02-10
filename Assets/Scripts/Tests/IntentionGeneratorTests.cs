@@ -31,6 +31,9 @@ namespace TimeLab.Tests {
 			_recorder.Record(new AddEntityComponentCommand(_entityId, new CharacterNeed(MainType, 1.5f)));
 			_recorder.Record(new AddEntityComponentCommand(_entityId, new CharacterNeed(OtherType, 1)));
 			_recorder.Record(new AddEntityComponentCommand(_entityId, new AIComponent()));
+			var sourceId = generator.GetNextId();
+			_recorder.Record(new AddEntityCommand(sourceId, Vector2Int.one));
+			_recorder.Record(new AddEntityComponentCommand(sourceId, new RefillSource(MainType, 2, 10)));
 			_updater.Update();
 		}
 
