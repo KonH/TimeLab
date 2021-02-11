@@ -63,6 +63,28 @@ namespace TimeLab.Tests {
 			_world.Locations.First(l => l.Id == newLocationId).Entities.Should().Contain(e => e.Id == _entityId);
 		}
 
+		[Test]
+		public void IsBotMovedToDistantRefillSource() {
+			var worldRecorder = Container.Resolve<WorldCommandRecorder>();
+			var newLocationId = _generator.GetNextId();
+			worldRecorder.Record(new AddLocationCommand(newLocationId, Rect2DInt.Zero));
+			worldRecorder.Record(new AddLocationComponentCommand(newLocationId, new RefillArea(Type, 1)));
+			var sourceDoorId = _generator.GetNextId();
+			_recorder.Record(new AddEntityCommand(sourceDoorId, Vector2Int.one));
+			_recorder.Record(new AddEntityComponentCommand(sourceDoorId, new PortalComponent(newLocationId, Vector2Int.zero)));
+			var sourceId = _generator.GetNextId();
+			var storage = Container.Resolve<CommandStorage>().GetLocationCommands(newLocationId);
+			storage.Enqueue(0, new AddEntityCommand(sourceId, Vector2Int.one));
+			storage.Enqueue(0, new AddEntityComponentCommand(sourceId, new RefillSource(Type, 1, 1)));
+			_updater.Update();
+
+			_updater.Update(5);
+			_updater.Update(5);
+			_updater.Update();
+
+			_world.Locations.First(l => l.Id == newLocationId).Entities.Should().Contain(e => e.Id == _entityId);
+		}
+
 		Entity GetEntity(ulong id) =>
 			_world.Locations.First()
 				.Entities.Single(e => e.Id == id);
