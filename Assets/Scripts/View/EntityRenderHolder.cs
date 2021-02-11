@@ -43,13 +43,8 @@ namespace TimeLab.View {
 		void OnComponentRemove(RenderComponent _) => ChangeRender(null);
 
 		void ChangeRender(RenderComponent render) {
-			var isPresent = (render != null);
-			if ( !isPresent ) {
-				if ( string.IsNullOrEmpty(_currentType) ) {
-					return;
-				}
-				_factory.Despawn(_currentType, _currentView);
-				_currentType = string.Empty;
+			ClearRender();
+			if ( render == null ) {
 				return;
 			}
 			_currentView = _factory.Spawn(render.Type);
@@ -58,6 +53,13 @@ namespace TimeLab.View {
 			}
 			_currentType = render.Type;
 			_currentView.transform.SetParent(transform, false);
+		}
+
+		void ClearRender() {
+			if ( !string.IsNullOrEmpty(_currentType) ) {
+				_factory.Despawn(_currentType, _currentView);
+			}
+			_currentType = string.Empty;
 		}
 	}
 }
